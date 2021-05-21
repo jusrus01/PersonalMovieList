@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { MovieComponent } from './movie/movie.component';
+import { MoviesComponent } from './movies/movies.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { MovieComponent } from './movie/movie.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    MovieComponent
+    MovieComponent,
+    MoviesComponent
   ],
   imports: [
     BrowserModule
