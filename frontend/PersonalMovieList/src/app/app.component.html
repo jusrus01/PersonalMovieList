@@ -1,9 +1,14 @@
-<nav data-test="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a data-test="logo" class="navbar-brand" href="#">Navbar logo</a>
+<div class="container-fluid bg-dark">
+    <header data-test="navbar" class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+        <span data-test="logo" class="fs-4">Logo</span>
+      </a>
 
-    <button data-test="login-button" class="btn btn-success me-2 float-right" type="button">Log In</button>
-    <button data-test="register-button" class="btn btn-success" type="button">Register</button>
-    <button data-test="logout-button" class="btn btn-success log-out-button" type="button">Log Out</button>
+      <ul class="nav nav-pills">
+        <li data-test="login-button" class="nav-item"><a href="#" class="nav-link active" aria-current="page">Login</a></li>
+        <li data-test="register-button" class="nav-item"><a href="#" class="nav-link">Register</a></li>
+        <li data-test="logout-button" class="nav-item log-out-button"><a href="#" class="nav-link">Log out</a></li>
+      </ul>
+    </header>
   </div>
-</nav>
