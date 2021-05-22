@@ -1,14 +1,22 @@
 <div class="container-fluid bg-dark">
     <header data-test="navbar" class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <a routerLink="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
         <span data-test="logo" class="fs-4">Logo</span>
       </a>
 
       <ul class="nav nav-pills">
-        <li data-test="login-button" class="nav-item"><a href="#" class="nav-link active" aria-current="page">Login</a></li>
-        <li data-test="register-button" class="nav-item"><a href="#" class="nav-link">Register</a></li>
-        <li data-test="logout-button" class="nav-item log-out-button"><a href="#" class="nav-link">Log out</a></li>
+        <li data-test="login-button" class="nav-item">
+          <a class="nav-link active" routerLink="/login" aria-current="page">Login</a>
+        </li>
+        <li data-test="register-button" class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+        <li data-test="logout-button" class="nav-item log-out-button">
+          <a class="nav-link">Log out</a>
+        </li>
       </ul>
+
     </header>
-  </div>
+</div>
+<router-outlet></router-outlet>
