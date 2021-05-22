@@ -26,7 +26,11 @@ import { HomeComponent } from './home/home.component';
         component: RegisterComponent
       },
       {
-        path: "",
+        path: '',
+        component: HomeComponent
+      },
+      {
+        path: '**',
         component: HomeComponent
       }
     ])
