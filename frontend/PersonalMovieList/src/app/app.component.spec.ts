@@ -10,6 +10,31 @@ describe('AppComponent', () => {
     }).compileComponents();
   });
 
+  it('should create the navbar', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    expect(fixture.nativeElement.querySelector('[data-test="navbar"]')).toBeTruthy();
+  });
+
+  it('navbar should have login button', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    expect(fixture.nativeElement.querySelector('[data-test="login-button"]')).toBeTruthy();
+  });
+
+  it('navbar should have logo', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    expect(fixture.nativeElement.querySelector('[data-test="logo"]')).toBeTruthy();
+  });
+
+  it('navbar should have register button', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    expect(fixture.nativeElement.querySelector('[data-test="register-button"]')).toBeTruthy();
+  });
+
+  it('navbar should have logout button', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    expect(fixture.nativeElement.querySelector('[data-test="logout-button"]')).toBeTruthy();
+  });
+
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
@@ -22,10 +47,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('PersonalMovieList');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('PersonalMovieList app is running!');
-  });
 });
