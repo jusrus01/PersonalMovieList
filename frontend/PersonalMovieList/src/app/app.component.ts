@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { title } from 'process';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'PersonalMovieList';
+
+  title = 'Personal Movie List - Home';
+
+  constructor(private titleService: Title) {
+    
+  }
+
+  ngOnInit() {
+    this.titleService.setTitle(this.title);
+  }
+
 }

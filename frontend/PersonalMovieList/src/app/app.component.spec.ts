@@ -85,52 +85,22 @@ describe('AppComponent', () => {
       expect(loc.path()).toBe('/');
     }))
 
-    it(`navigate to "" redirects to / should have as title 'Personal Movie List - Home'`, fakeAsync(() => {
-      router.navigate(['']);
-      tick();
-      const app = fixture.componentInstance;
-      expect(app.title).toEqual('Personal Movie List - Home');
-    }));
-
     it('navigate to "asddasd" redirects to /', fakeAsync(() => {
       router.navigate(['asddasd']);
       tick();
       expect(loc.path()).toBe('/asddasd');
     }))
 
-    it(`navigate to "asddasd" redirects to / should have as title 'Personal Movie List - Home'`, fakeAsync(() => {
-      router.navigate(['asddasd']);
-      tick();
-      const app = fixture.componentInstance;
-      expect(app.title).toEqual('Personal Movie List - Home');
-    }));
-
     it('navigate to "login" redirects to /login', fakeAsync(() => {
       router.navigate(['login']);
       tick();
       expect(loc.path()).toBe('/login');
     }))
-
-    it(`navigate to "login" redirects to /login should have as title 'Personal Movie List - Home'`, fakeAsync(() => {
-      router.navigate(['login']);
-      tick();
-      const app = fixture.componentInstance;
-      expect(app.title).toEqual('Personal Movie List - Login');
-    }));
     
     it('navigate to "register" redirects to /register', fakeAsync(() => {
       router.navigate(['register']);
       tick();
       expect(loc.path()).toBe('/register');
     }))
-
-    it(`navigate to "register" redirects to /register should have as title 'Personal Movie List - Home'`, fakeAsync(() => {
-      router.navigate(['register']);
-      tick();
-      const app = fixture.componentInstance;
-      expect(app.title).toEqual('Personal Movie List - Register');
-    }));
-    
-
   })
 });

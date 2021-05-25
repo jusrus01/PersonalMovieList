@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -8,10 +8,10 @@ import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
 
 export const routes: Routes = [
-  { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
-  { path: '', component: HomeComponent },
-  { path: '**', component: HomeComponent }
+  { path: "login", component: LoginComponent, data: { title: 'Login'} },
+  { path: "register", component: RegisterComponent, data: { title: 'Register'}},
+  { path: '', component: HomeComponent, data: { title: 'Home'}},
+  { path: '**', component: HomeComponent, data: { title: 'Home'}}
 ]
 
 @NgModule({
@@ -26,7 +26,7 @@ export const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

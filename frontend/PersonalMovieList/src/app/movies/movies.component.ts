@@ -9,14 +9,12 @@ import { Movie } from './movie';
 })
 export class MoviesComponent implements OnInit {
 
-  constructor() { }
-
   movies: Movie[];
 
+  constructor() { }
+
   ngOnInit(): void {
-
     this.movies = MOVIES;
-
   }
 
 }
