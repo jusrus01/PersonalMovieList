@@ -10,7 +10,6 @@
         <button data-test="movie-add" class="btn btn-success" style="margin-left: 72%;">Add</button>
         <button data-test="movie-sort" class="btn btn-primary" style="margin-left: 10px;">Sort</button>
       </div>
-
     </div>
 
     <div class="media text-muted pt-3" *ngFor="let movie of movies">
@@ -20,9 +19,9 @@
 
           <div class="row">
             <strong data-test="movie-title" class="col text-dark">{{movie.title}}</strong>
-            <div class="col align-items-right">
+            <div class="col">
               <a data-test="movie-edit" class="ml-auto float-right p-3" style="margin-left: 75%;" href="#">Edit</a>
-              <a data-test="movie-remove" class="ml-auto float-right" href="#">Remove</a>
+              <a data-test="movie-remove" class="ml-auto float-right">Remove</a>
             </div>
           </div>
 
@@ -31,6 +30,5 @@
         <span data-test="movie-comment" class="d-block">{{movie.comment}}</span>
       </div>
     </div>
-
   </div>
 </main>

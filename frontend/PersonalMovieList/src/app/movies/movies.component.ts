@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MOVIES } from '../mock/mock-movies';
+import { MoviesService } from '../movies.service';
 import { Movie } from './movie';
 
 @Component({
@@ -11,10 +11,11 @@ export class MoviesComponent implements OnInit {
 
   movies: Movie[];
 
-  constructor() { }
+  constructor(private moviesService: MoviesService) {
+    this.movies = this.moviesService.fetchMovies();
+  }
 
   ngOnInit(): void {
-    this.movies = MOVIES;
   }
 
 }
