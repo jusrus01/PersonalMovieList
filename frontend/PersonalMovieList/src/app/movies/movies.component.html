@@ -21,7 +21,7 @@
             <strong data-test="movie-title" class="col text-dark">{{movie.title}}</strong>
             <div class="col">
               <a data-test="movie-edit" class="ml-auto float-right p-3" style="margin-left: 75%;" href="#">Edit</a>
-              <a data-test="movie-remove" class="ml-auto float-right">Remove</a>
+              <a data-test="movie-remove" class="ml-auto float-right" (click)="removeMovie(movie)">Remove</a>
             </div>
           </div>
 

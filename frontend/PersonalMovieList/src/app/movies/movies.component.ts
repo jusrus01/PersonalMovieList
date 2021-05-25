@@ -18,4 +18,9 @@ export class MoviesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  removeMovie(movie: Movie) : void {
+    // might need to remove from maiin array too
+    this.moviesService.removeMovie(movie);
+  }
+
 }
