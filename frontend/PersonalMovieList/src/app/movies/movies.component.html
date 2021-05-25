@@ -1,7 +1,36 @@
-<h2>Movie list</h2>
-<ul>
-    <li *ngFor="let movie of movies">
-      <span class="">{{movie.title}}</span> {{movie.comment}}
-    </li>
-</ul>
-  
+<main role="main" class="container">
+  <div class="my-3 p-3 bg-white rounded box-shadow">
+
+    <div class="row border-bottom border-gray mb-0">
+      <div class="col">
+        <h3>Movies list</h3>
+      </div>
+
+      <div class="col align-items-right">
+        <button data-test="movie-add" class="btn btn-success" style="margin-left: 75%;">Add</button>
+        <button data-test="movie-sort" class="btn btn-primary">Sort</button>
+      </div>
+
+    </div>
+
+    <div class="media text-muted pt-3" *ngFor="let movie of movies">
+      <img data-test="movie-image" alt="image" class="mr-2 rounded">
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <div class="w-100">
+
+          <div class="row">
+            <strong data-test="movie-title" class="col text-dark">{{movie.title}}</strong>
+            <div class="col align-items-right">
+              <a data-test="movie-edit" class="ml-auto float-right p-3" style="margin-left: 75%;" href="#">Edit</a>
+              <a data-test="movie-remove" class="ml-auto float-right" href="#">Remove</a>
+            </div>
+          </div>
+
+        </div>
+        <span data-test="movie-rating" class="d-block">{{movie.rating}}</span>
+        <span data-test="movie-comment" class="d-block">{{movie.comment}}</span>
+      </div>
+    </div>
+
+  </div>
+</main>
