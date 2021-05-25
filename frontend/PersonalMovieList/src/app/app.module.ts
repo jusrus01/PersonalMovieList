@@ -1,11 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
+
+export const routes: Routes = [
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent },
+  { path: '', component: HomeComponent },
+  { path: '**', component: HomeComponent }
+]
 
 @NgModule({
   declarations: [
@@ -17,25 +24,7 @@ import { MoviesComponent } from './movies/movies.component';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      {
-        path: "login",
-        component: LoginComponent
-
-      },
-      {
-        path: "register",
-        component: RegisterComponent
-      },
-      {
-        path: '',
-        component: HomeComponent
-      },
-      {
-        path: '**',
-        component: HomeComponent
-      }
-    ])
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

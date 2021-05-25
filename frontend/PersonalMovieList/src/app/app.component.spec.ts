@@ -1,5 +1,13 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Directive, HostListener, Input, NgModule } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { routes } from './app.module';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -47,4 +55,53 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('PersonalMovieList');
   });
 
+  // testing routing
+  describe('AppComponentRoutingTesting', () => {
+
+    let loc : Location;
+    let router : Router;
+    let fixture;
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule.withRoutes(routes)],
+        declarations: [
+          HomeComponent,
+          RegisterComponent,
+          LoginComponent
+        ]
+      });
+
+      router = TestBed.get(Router);
+      loc = TestBed.get(Location);
+      fixture = TestBed.createComponent(AppComponent);
+
+      router.initialNavigation();
+    });
+
+    it('navigate to "" redirects to /', fakeAsync(() => {
+      router.navigate(['']);
+      tick();
+      expect(loc.path()).toBe('/');
+    }))
+
+    it('navigate to "asddasd" redirects to /', fakeAsync(() => {
+      router.navigate(['asddasd']);
+      tick();
+      expect(loc.path()).toBe('/asddasd');
+    }))
+
+    it('navigate to "login" redirects to /login', fakeAsync(() => {
+      router.navigate(['login']);
+      tick();
+      expect(loc.path()).toBe('/login');
+    }))
+    
+    it('navigate to "register" redirects to /register', fakeAsync(() => {
+      router.navigate(['register']);
+      tick();
+      expect(loc.path()).toBe('/register');
+    }))
+
+  })
 });
