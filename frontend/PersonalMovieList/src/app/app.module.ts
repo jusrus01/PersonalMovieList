@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
+import { FormsModule } from '@angular/forms';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent, data: { title: 'Login'} },
@@ -24,6 +25,7 @@ export const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [Title],

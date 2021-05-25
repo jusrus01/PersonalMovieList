@@ -7,9 +7,11 @@ import { Movie } from './movie';
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.css']
 })
+
 export class MoviesComponent implements OnInit {
 
   movies: Movie[];
+  selectedMovie? : Movie;
 
   constructor(private moviesService: MoviesService) {
     this.movies = this.moviesService.fetchMovies();
@@ -19,8 +21,16 @@ export class MoviesComponent implements OnInit {
   }
 
   removeMovie(movie: Movie) : void {
-    // might need to remove from maiin array too
     this.moviesService.removeMovie(movie);
+  }
+
+  selectMovie(movie: Movie) : void{
+    if(this.selectedMovie == movie) {
+      movie.comment = this.selectedMovie.comment;
+      this.selectedMovie = null;
+    } else {
+      this.selectedMovie = movie;
+    }
   }
 
 }
