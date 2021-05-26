@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { MoviesService } from 'src/app/movies.service';
 
 @Component({
   selector: 'movie-create-modal',
@@ -7,7 +8,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class MovieCreateModalComponent {
   closeResult = '';
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal,
+    private moviesService: MoviesService) {}
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -25,5 +27,8 @@ export class MovieCreateModalComponent {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  private createMovie() {
   }
 }
