@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 py-3">
-  <a class="navbar-brand" [routerLink]="'.'">Logo</a>
+<nav data-test="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 py-3">
+  <a data-test="logo" class="navbar-brand" [routerLink]="'/home'">Logo</a>
 
   <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
     &#9776;
@@ -8,16 +8,16 @@
   <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Home</a>
+        <a class="nav-link" [routerLink]="'/home'" (click)="isMenuCollapsed = true">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Login</a>
+        <a data-test="login-button" class="nav-link" [routerLink]="'/login'" (click)="isMenuCollapsed = true">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Register</a>
+        <a data-test="register-button" class="nav-link" [routerLink]="'/register'" (click)="isMenuCollapsed = true">Register</a>
       </li>
       <li class="nav-item log-out-button">
-        <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Log out</a>
+        <a data-test="logout-button" class="nav-link" [routerLink]="'notimplemented'" (click)="isMenuCollapsed = true">Log out</a>
       </li>
     </ul>
   </div>

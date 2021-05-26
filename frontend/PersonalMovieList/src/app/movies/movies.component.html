@@ -17,17 +17,17 @@
     <div class="list-group pt-3" *ngFor="let movie of movies">
       <a class="list-group-item list-group-item-action flex-column align-items-start pt-3">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1" *ngIf="selectedMovie != movie">{{movie.title}}</h5>
+          <h5 data-test="movie-title" class="mb-1" *ngIf="selectedMovie != movie">{{movie.title}}</h5>
           <input class="form-control w-50" *ngIf="selectedMovie === movie" [(ngModel)]="movie.title" value="{{movie.title}}">
-          <ngb-rating [(rate)]="movie.rating"></ngb-rating>
+          <ngb-rating data-test="movie-rating" [(rate)]="movie.rating"></ngb-rating>
         </div>
-        <img class="mb-1" alt="image">
+        <img data-test="movie-image" class="mb-1" alt="image">
         <br>
-        <small *ngIf="selectedMovie != movie">{{movie.comment}}</small>
+        <small data-test="movie-comment" *ngIf="selectedMovie != movie">{{movie.comment}}</small>
         <input class="form-control w-50" *ngIf="selectedMovie === movie" [(ngModel)]="movie.comment" value="{{movie.comment}}">
         <div class="ml-auto float-right">
-          <button *ngIf="selectedMovie != movie" data-test="movie-remove" class="btn btn-outline-primary ml-auto" (click)="selectMovie(movie)">Edit</button>
-          <button *ngIf="selectedMovie === movie" data-test="movie-remove" class="btn btn-outline-primary ml-auto active" (click)="selectMovie(movie)">Save</button>
+          <button data-test="movie-edit" *ngIf="selectedMovie != movie" data-test="movie-remove" class="btn btn-outline-primary ml-auto" (click)="selectMovie(movie)">Edit</button>
+          <button data-test="movie-edit" *ngIf="selectedMovie === movie" data-test="movie-remove" class="btn btn-outline-primary ml-auto active" (click)="selectMovie(movie)">Save</button>
           <button data-test="movie-remove" class="btn btn-outline-danger ml-3" (click)="removeMovie(movie)">Remove</button>
         </div>
       </a>
