@@ -9,6 +9,7 @@ import { title } from 'process';
 })
 export class AppComponent {
 
+  public isMenuCollapsed = true;
   title = 'Personal Movie List - Home';
 
   constructor(private titleService: Title) {

@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <h4 class="modal-title" id="modal-basic-title">Add new movie!</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -19,12 +19,8 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Create</button>
     </div>
   </ng-template>
   
-  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
-  
-  <hr>
-  
-  <pre>{{ closeResult }}</pre>
+  <button class="btn btn-lg btn-outline-primary ml-auto" (click)="open(content)">Add</button>

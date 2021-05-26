@@ -1,14 +1,12 @@
 import {Component} from '@angular/core';
-
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'ngbd-modal-basic',
+  selector: 'movie-create-modal',
   templateUrl: './movie-create-modal.component.html'
 })
 export class MovieCreateModalComponent {
   closeResult = '';
-
   constructor(private modalService: NgbModal) {}
 
   open(content) {
