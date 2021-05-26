@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MovieCreateModalComponent } from './movie-create-modal/movie-create-modal.component';
+import { MovieCreateModalComponent } from './movies/movie-create-modal/movie-create-modal.component';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent, data: { title: 'Login'} },
