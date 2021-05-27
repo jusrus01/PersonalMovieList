@@ -11,27 +11,57 @@
 
           <div data-test="create-title" class="form-group">
             <label for="movieTitle">Title</label>
-            <input formControlName="title" class="form-control" id="" type="text">
+            <input formControlName="title" class="form-control my-0" name="title" type="text"
+              required maxlength="40">
           </div>
 
+          <div *ngIf="creationForm.controls['title'].invalid">
+            <div *ngIf="creationForm.controls['title'].errors.required" class="alert alert-danger" role="alert">
+              Title is required.
+            </div>
+          </div>
+          
           <div data-test="create-image" class="form-group">
             <label for="image">Image</label>
             <input formControlName="image" class="form-control" type="text">
           </div>
 
-          <div  data-test="create-rating" class="form-group">
+          <div  data-test="create-rating">
             <label for="movieTitle">Rating</label>
-            <input formControlName="rating" class="form-control" type="text">
+          </div>
+
+          <div class="btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" formControlName="rating">
+            <label ngbButtonLabel class="badge badge-pill badge-primary">
+              <input ngbButton type="radio" [value]="1"> 1
+            </label>
+            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+              <input ngbButton type="radio" [value]="2"> 2
+            </label>
+            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+              <input ngbButton type="radio" [value]="3"> 3
+            </label>
+            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+              <input ngbButton type="radio" [value]="4"> 4
+            </label>
+            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+              <input ngbButton type="radio" [value]="5"> 5
+            </label>
+          </div>
+          <div *ngIf="creationForm.controls['rating'].invalid">
+            <div class="alert" *ngIf="creationForm.controls['rating'].errors.required" class="alert alert-danger" role="alert">
+              Rating is required.
+            </div>
           </div>
 
           <div  data-test="create-comment" class="form-group">
             <label for="movieTitle">Comment</label>
-            <input formControlName="comment" class="form-control" type="text">
+            <input formControlName="comment" class="form-control" type="text"
+               maxlength="100">
           </div>
           
         </div>
         <div class="modal-footer">
-          <button data-test="create-button" type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Create</button>
+          <button data-test="create-button" type="submit" class="btn btn-outline-dark">Create</button>
         </div>
       </form>
     </div>

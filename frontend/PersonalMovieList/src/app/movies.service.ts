@@ -19,6 +19,9 @@ export class MoviesService {
   }
 
   createMovie(title: string, comment: string, rating: number) : void {
+    if(rating <= 0 || rating > 5) {
+      rating = 1;
+    }
     this.movies.push({id: this.movies.length + 1, title: title, rating: rating, comment: comment});
   }
 

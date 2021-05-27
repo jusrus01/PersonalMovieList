@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { MoviesService } from 'src/app/movies.service';
 
@@ -11,10 +11,10 @@ export class MovieCreateModalComponent {
   
   closeResult = '';
   creationForm = this.formBuilder.group({
-    title: '',
+    title: ['', Validators.required],
     image: '',
     comment: '',
-    rating: ''
+    rating: ['', Validators.required]
   });
 
   constructor(private modalService: NgbModal,
@@ -38,11 +38,13 @@ export class MovieCreateModalComponent {
       return `with: ${reason}`;
     }
   }
-
+// (click)="modal.close('Save click')"
   createMovie() : void {
-    var values = this.creationForm.value;
-    this.moviesService.createMovie(values.title, values.comment, values.rating);
-    console.log("works");
-    console.log(values);
+    if(this.creationForm.valid) {
+      var values = this.creationForm.value;
+      this.moviesService.createMovie(values.title, values.comment, values.rating);
+      this.creationForm.reset();
+      this.modalService.dismissAll();
+    }
   }
 }
