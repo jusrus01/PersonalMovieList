@@ -3,7 +3,7 @@ using PersonalMovieListApi.Models;
 
 namespace PersonalMovieListApi.Data
 {
-    public interface IMovieRepo
+    public interface IMoviesRepo
     {
         bool SaveChanges();
         IEnumerable<Movie> GetAllMovies();
