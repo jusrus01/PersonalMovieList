@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { MoviesService } from 'src/app/movies.service';
 
@@ -7,9 +8,18 @@ import { MoviesService } from 'src/app/movies.service';
   templateUrl: './movie-create-modal.component.html'
 })
 export class MovieCreateModalComponent {
+  
   closeResult = '';
+  creationForm = this.formBuilder.group({
+    title: '',
+    image: '',
+    comment: '',
+    rating: ''
+  });
+
   constructor(private modalService: NgbModal,
-    private moviesService: MoviesService) {}
+    private moviesService: MoviesService,
+    private formBuilder: FormBuilder) {}
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -29,6 +39,10 @@ export class MovieCreateModalComponent {
     }
   }
 
-  private createMovie() {
+  createMovie() : void {
+    var values = this.creationForm.value;
+    this.moviesService.createMovie(values.title, values.comment, values.rating);
+    console.log("works");
+    console.log(values);
   }
 }

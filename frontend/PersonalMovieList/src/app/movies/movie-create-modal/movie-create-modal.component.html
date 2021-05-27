@@ -6,35 +6,36 @@
       </button>
     </div>
     <div class="modal-body">
-      <form>
+      <form [formGroup]="creationForm" (ngSubmit)="createMovie()" action="post">
         <div class="form-group">
 
-          <div class="form-group">
+          <div data-test="create-title" class="form-group">
             <label for="movieTitle">Title</label>
-            <input class="form-control" type="text">
+            <input formControlName="title" class="form-control" id="" type="text">
           </div>
 
-          <div class="form-group">
+          <div data-test="create-image" class="form-group">
             <label for="image">Image</label>
-            <input class="form-control" type="text">
+            <input formControlName="image" class="form-control" type="text">
           </div>
 
-          <div class="form-group">
+          <div  data-test="create-rating" class="form-group">
             <label for="movieTitle">Rating</label>
-            <input class="form-control" type="text">
+            <input formControlName="rating" class="form-control" type="text">
           </div>
 
-          <div class="form-group">
+          <div  data-test="create-comment" class="form-group">
             <label for="movieTitle">Comment</label>
-            <input class="form-control" type="text">
+            <input formControlName="comment" class="form-control" type="text">
           </div>
           
         </div>
+        <div class="modal-footer">
+          <button data-test="create-button" type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Create</button>
+        </div>
       </form>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Create</button>
-    </div>
+   
   </ng-template>
   
   <button class="btn btn-lg btn-outline-primary ml-auto" (click)="open(content)">Add</button>

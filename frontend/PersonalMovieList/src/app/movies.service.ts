@@ -18,6 +18,10 @@ export class MoviesService {
     return this.movies;
   }
 
+  createMovie(title: string, comment: string, rating: number) : void {
+    this.movies.push({id: this.movies.length + 1, title: title, rating: rating, comment: comment});
+  }
+
   removeMovie(movie: Movie) : void {
     const index = this.movies.indexOf(movie);
     if(index > -1) {
