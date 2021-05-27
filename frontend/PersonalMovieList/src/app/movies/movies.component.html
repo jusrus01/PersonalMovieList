@@ -19,7 +19,13 @@
         <div class="d-flex w-100 justify-content-between">
           <h5 data-test="movie-title" class="mb-1" *ngIf="selectedMovie != movie">{{movie.title}}</h5>
           <input class="form-control w-50" *ngIf="selectedMovie === movie" [(ngModel)]="movie.title" value="{{movie.title}}">
-          <ngb-rating data-test="movie-rating" [(rate)]="movie.rating" [max]="5"></ngb-rating>
+
+          <ngb-rating data-test="movie-rating" [(rate)]="movie.rating" [max]="5">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+        
         </div>
         <img data-test="movie-image" class="mb-1" alt="image">
         <br>
