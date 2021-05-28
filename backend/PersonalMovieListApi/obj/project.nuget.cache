@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "9G26tKPYeOD2mSjl3bYxd1xNqNJKCyy18wBKDvN7d6JJPZEkVl9EQNwfEgrVcbvgO5Uy1YNqbfMB1dfUk8S5Eg==",
+  "dgSpecHash": "kM1ZMPMEBt+xqrUbx5PkBsdxBt/aD+Zgz7OZN06j2HXoogTgPScYlVX1JzdaTXfbhASVUxjm8HbwQyxnjARK+Q==",
   "success": true,
   "projectFilePath": "E:\\PersonalMovieList\\backend\\PersonalMovieListApi\\PersonalMovieListApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\justi\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\justi\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\justi\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\justi\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\justi\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",

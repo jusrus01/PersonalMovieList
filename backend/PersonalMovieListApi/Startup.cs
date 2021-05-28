@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PersonalMovieListApi.Data;
+using AutoMapper;
 
 namespace PersonalMovieListApi
 {
@@ -28,6 +29,8 @@ namespace PersonalMovieListApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IMoviesRepo, SqlMoviesRepo>();
 
