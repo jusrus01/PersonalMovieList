@@ -1,4 +1,4 @@
-# Personal Movies List (in progress)
+# Personal Movie List (in progress)
 ## Description
 Simple web application to store and rate movies.
 ## Tools
