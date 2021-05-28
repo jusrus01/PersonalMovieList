@@ -29,7 +29,7 @@ namespace PersonalMovieListApi
         {
             services.AddControllers();
 
-            services.AddScoped<IMoviesRepo, MockMoviesRepo>();
+            services.AddScoped<IMoviesRepo, SqlMoviesRepo>();
 
             services.AddDbContext<MoviesDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
