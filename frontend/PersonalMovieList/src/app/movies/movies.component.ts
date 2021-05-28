@@ -14,10 +14,11 @@ export class MoviesComponent implements OnInit {
   selectedMovie? : Movie;
 
   constructor(private moviesService: MoviesService) {
-    this.movies = this.moviesService.fetchMovies();
   }
 
   ngOnInit(): void {
+    this.moviesService.fetchMoviesFromApi()
+      .subscribe(movies => this.movies = movies);
   }
 
   removeMovie(movie: Movie) : void {
