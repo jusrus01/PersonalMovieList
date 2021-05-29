@@ -19,6 +19,7 @@ namespace PersonalMovieListApi
 {
     public class Startup
     {
+        private readonly string policy = "CustomCorsPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +29,12 @@ namespace PersonalMovieListApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+                options.AddPolicy(policy, builder => 
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()));
+
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -45,10 +52,10 @@ namespace PersonalMovieListApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(policy);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

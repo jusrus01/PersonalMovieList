@@ -22,7 +22,7 @@ export class MoviesService {
   }
 
   fetchMoviesFromApi() : Observable<Movie[]> {
-    return this.http.get<Movie[]>("http://localhost:5000/api/movies", { withCredentials: true })
+    return this.http.get<Movie[]>("http://localhost:5000/api/movies", { withCredentials: false  })
       .pipe(
         map((data: any[]) => data.map((item: Movie) =>
           new Movie(
