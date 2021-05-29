@@ -41,6 +41,7 @@ namespace PersonalMovieListApi.Controllers
         }
 
         //POST api/movies
+        [HttpPost]
         public ActionResult<MovieReadDto> CreateMovie(MovieCreateDto movieCreateDto)
         {
             Movie newMovie = _mapper.Map<Movie>(movieCreateDto);
