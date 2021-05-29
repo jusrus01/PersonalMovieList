@@ -22,7 +22,12 @@ export class MoviesComponent implements OnInit {
   }
 
   removeMovie(movie: Movie) : void {
-    this.moviesService.removeMovie(movie);
+    const index = this.movies.indexOf(movie);
+    if(index > -1) {
+      this.movies.splice(index, 1);
+    }
+    this.moviesService.removeMovie(movie)
+      .subscribe(m => m);
   }
 
   selectMovie(movie: Movie) : void{

@@ -41,10 +41,7 @@ export class MoviesService {
     this.movies.push({id: this.movies.length + 1, title: title, rating: rating, comment: comment});
   }
 
-  removeMovie(movie: Movie) : void {
-    const index = this.movies.indexOf(movie);
-    if(index > -1) {
-      this.movies.splice(index, 1);
-    }
+  removeMovie(movie: Movie) : Observable<any> {
+    return this.http.delete("http://localhost:5000/api/movies/" + movie.id);
   }
 }
