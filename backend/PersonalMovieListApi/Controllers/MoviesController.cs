@@ -9,7 +9,7 @@ namespace PersonalMovieListApi.Controllers
 {
     [Route("api/movies")]
     [ApiController]
-    public class MoviesController : Controller
+    public class MoviesController : ControllerBase
     {
         private readonly IMoviesRepo _repo;
         private IMapper _mapper;
@@ -20,12 +20,38 @@ namespace PersonalMovieListApi.Controllers
             _mapper = mapper;
         }
         
-        // GET api/movies
+        //GET api/movies
         [HttpGet]
         public ActionResult <IEnumerable<Movie>> GetAllMovies()
         {
             IEnumerable<Movie> movies = _repo.GetAllMovies();
             return Ok(_mapper.Map<IEnumerable<MovieReadDto>>(movies));
+        }
+
+        //GET api/movies/{id}
+        [HttpGet("{id}", Name="GetMovieById")]
+        public ActionResult <MovieReadDto> GetMovieById(int id)
+        {
+            var commandItem = _repo.GetMovieById(id);
+            if(commandItem != null)
+            {
+                return Ok(_mapper.Map<MovieReadDto>(commandItem));
+            }
+            return NotFound();
+        }
+
+        //POST api/movies
+        public ActionResult<MovieReadDto> CreateMovie(MovieCreateDto movieCreateDto)
+        {
+            Movie newMovie = _mapper.Map<Movie>(movieCreateDto);
+            
+            _repo.CreateMovie(newMovie);
+            _repo.SaveChanges();
+
+            MovieReadDto createdMovie = _mapper.Map<MovieReadDto>(newMovie);
+
+            return CreatedAtRoute(nameof(GetMovieById), new { Id = createdMovie.Id },
+                createdMovie);
         }
 
         //PUT api/movies/{id}

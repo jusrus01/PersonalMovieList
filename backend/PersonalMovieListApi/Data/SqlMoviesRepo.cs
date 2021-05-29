@@ -16,7 +16,12 @@ namespace PersonalMovieListApi.Data
 
         public void CreateMovie(Movie movie)
         {
-            throw new System.NotImplementedException();
+            if(movie == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            _context.Movies.Add(movie);
         }
 
         public void DeleteMovie(Movie movie) // should it reassign id's after deletion?
