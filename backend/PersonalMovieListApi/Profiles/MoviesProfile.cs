@@ -9,6 +9,7 @@ namespace PersonalMovieListApi.Profiles
         public MoviesProfile()
         {
             CreateMap<Movie, MovieReadDto>();
+            CreateMap<MovieUpdateDto, Movie>();
         }
     }
 }

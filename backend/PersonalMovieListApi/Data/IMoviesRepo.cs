@@ -11,5 +11,6 @@ namespace PersonalMovieListApi.Data
         Movie GetMovieByTitle(string title);
         void CreateMovie(Movie movie);
         void DeleteMovie(Movie movie);
+        void UpdateMovie(Movie movie);
     }
 }

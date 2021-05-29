@@ -28,6 +28,23 @@ namespace PersonalMovieListApi.Controllers
             return Ok(_mapper.Map<IEnumerable<MovieReadDto>>(movies));
         }
 
+        //PUT api/movies/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateMovie(int id, MovieUpdateDto movieUpdateDto)
+        {
+            Movie foundMovie = _repo.GetMovieById(id);
+            if(foundMovie == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(movieUpdateDto, foundMovie);
+
+            _repo.UpdateMovie(foundMovie);
+            _repo.SaveChanges();
+
+            return NoContent();
+        }
+
         //DELETE api/movies/{id}
         [HttpDelete("{id}")]
         public ActionResult DeleteMovie(int id)

@@ -48,5 +48,15 @@ namespace PersonalMovieListApi.Data
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        public void UpdateMovie(Movie movie)
+        {
+            if(movie == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            _context.Movies.Update(movie);
+        }
     }
 }
