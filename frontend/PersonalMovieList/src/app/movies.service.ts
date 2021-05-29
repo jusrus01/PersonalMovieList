@@ -12,9 +12,11 @@ import { map } from 'rxjs/operators';
 export class MoviesService {
 
   movies: Movie[];
+  createdMovie : Movie;
 
   constructor(private http: HttpClient) { 
     this.movies = MOVIES;
+    this.createdMovie = null;
   }
 
   fetchMovies() : Movie[] {
@@ -38,7 +40,11 @@ export class MoviesService {
     if(rating <= 0 || rating > 5) {
       rating = 1;
     }
-    this.movies.push({id: this.movies.length + 1, title: title, rating: rating, comment: comment});
+
+    this.createdMovie = new Movie(this.movies.length + 1, title, comment, rating);
+
+    this.http.post("http://localhost:5000/api/movies", { title, rating, comment })
+      .subscribe(s => s);
   }
 
   removeMovie(movie: Movie) : Observable<any> {

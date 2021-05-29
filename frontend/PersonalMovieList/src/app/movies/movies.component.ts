@@ -21,6 +21,14 @@ export class MoviesComponent implements OnInit {
       .subscribe(movies => this.movies = movies);
   }
 
+  ngDoCheck() {
+    if(this.moviesService.createdMovie != null) {
+
+      this.movies.push(this.moviesService.createdMovie);
+      this.moviesService.createdMovie = null;
+    }
+  }
+
   removeMovie(movie: Movie) : void {
     const index = this.movies.indexOf(movie);
     if(index > -1) {

@@ -38,7 +38,7 @@ export class MovieCreateModalComponent {
       return `with: ${reason}`;
     }
   }
-// (click)="modal.close('Save click')"
+  
   createMovie() : void {
     if(this.creationForm.valid) {
       var values = this.creationForm.value;
