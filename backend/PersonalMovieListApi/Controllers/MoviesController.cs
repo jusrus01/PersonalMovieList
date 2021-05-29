@@ -20,11 +20,27 @@ namespace PersonalMovieListApi.Controllers
             _mapper = mapper;
         }
         
+        // GET api/movies
         [HttpGet]
         public ActionResult <IEnumerable<Movie>> GetAllMovies()
         {
             IEnumerable<Movie> movies = _repo.GetAllMovies();
             return Ok(_mapper.Map<IEnumerable<MovieReadDto>>(movies));
+        }
+
+        //DELETE api/movies/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteMovie(int id)
+        {
+            Movie foundMovie = _repo.GetMovieById(id);
+            if(foundMovie == null)
+            {
+                return NotFound();
+            }
+            _repo.DeleteMovie(foundMovie);
+            _repo.SaveChanges();
+
+            return NoContent();
         }
     }
 }

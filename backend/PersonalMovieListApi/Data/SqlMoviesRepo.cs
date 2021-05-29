@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PersonalMovieListApi.Models;
 using System.Linq;
+using System;
 
 namespace PersonalMovieListApi.Data
 {
@@ -18,6 +19,16 @@ namespace PersonalMovieListApi.Data
             throw new System.NotImplementedException();
         }
 
+        public void DeleteMovie(Movie movie) // should it reassign id's after deletion?
+        {
+            if(movie == null)
+            {
+                throw new ArgumentNullException(nameof(movie));
+            }
+
+            _context.Movies.Remove(movie);
+        }
+
         public IEnumerable<Movie> GetAllMovies()
         {
             return _context.Movies.ToList();
@@ -25,7 +36,7 @@ namespace PersonalMovieListApi.Data
 
         public Movie GetMovieById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Movies.FirstOrDefault(m => m.Id == id);
         }
 
         public Movie GetMovieByTitle(string title)
@@ -35,7 +46,7 @@ namespace PersonalMovieListApi.Data
 
         public bool SaveChanges()
         {
-            throw new System.NotImplementedException();
+            return (_context.SaveChanges() >= 0);
         }
     }
 }
