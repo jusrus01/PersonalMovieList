@@ -29,6 +29,12 @@ export class MoviesComponent implements OnInit {
     }
   }
 
+  updateMovie(movie: Movie) : void {
+    
+    this.selectMovie(movie);
+    this.moviesService.updateMovie(movie);
+  }
+
   removeMovie(movie: Movie) : void {
     const index = this.movies.indexOf(movie);
     if(index > -1) {

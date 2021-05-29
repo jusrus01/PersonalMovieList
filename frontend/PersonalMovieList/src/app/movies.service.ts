@@ -50,4 +50,14 @@ export class MoviesService {
   removeMovie(movie: Movie) : Observable<any> {
     return this.http.delete("http://localhost:5000/api/movies/" + movie.id);
   }
+
+  updateMovie(movie: Movie) : void {
+
+    const title = movie.title;
+    const rating = movie.rating;
+    const comment = movie.comment;
+
+    this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment })
+      .subscribe(s => s);
+  }
 }

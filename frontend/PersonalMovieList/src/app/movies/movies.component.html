@@ -33,7 +33,7 @@
         <input class="form-control w-50" *ngIf="selectedMovie === movie" [(ngModel)]="movie.comment" value="{{movie.comment}}">
         <div class="ml-auto float-right">
           <button data-test="movie-edit" *ngIf="selectedMovie != movie" data-test="movie-remove" class="btn btn-outline-primary ml-auto" (click)="selectMovie(movie)">Edit</button>
-          <button data-test="movie-edit" *ngIf="selectedMovie === movie" data-test="movie-remove" class="btn btn-outline-primary ml-auto active" (click)="selectMovie(movie)">Save</button>
+          <button data-test="movie-edit" type="submit" *ngIf="selectedMovie === movie" data-test="movie-remove" class="btn btn-outline-primary ml-auto active" (click)="updateMovie(movie)">Save</button>
           <button data-test="movie-remove" class="btn btn-outline-danger ml-3" (click)="removeMovie(movie)">Remove</button>
         </div>
       </a>
