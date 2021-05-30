@@ -26,5 +26,12 @@ namespace PersonalMovieListApi.Controllers
             var result = await _userService.RegisterAsync(model);
             return Ok(result);
         }
+
+        [HttpPost("token")]
+        public async Task<IActionResult> GetTokenAsync(TokenRequestModel model)
+        {
+            var result = await _userService.GetTokenAsync(model);
+            return Ok(result);
+        }
     }
 }
