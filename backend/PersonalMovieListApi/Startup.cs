@@ -90,8 +90,7 @@ namespace PersonalMovieListApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection(); // CORS
-
+            //app.UseHttpsRedirection(); // CORS
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

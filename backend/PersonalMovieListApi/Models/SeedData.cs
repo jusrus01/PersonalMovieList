@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PersonalMovieListApi.Data;
 using PersonalMovieListApi.Models;
+using PersonalMovieListApi.Settings;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MvcMovie.Models
 {
@@ -51,6 +54,28 @@ namespace MvcMovie.Models
                     }
                 );
                 context.SaveChanges();
+            }
+        }
+
+        public static async Task InitializeUsers(UserManager<User> userManager, 
+            RoleManager<IdentityRole> roleManager)
+        {
+            await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.Administrator.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.Moderator.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.User.ToString()));
+            
+            //Seed Default User
+            var defaultUser = new User 
+            {   UserName = Authorization.default_username, 
+                Email = Authorization.default_email, 
+                EmailConfirmed = true, 
+                PhoneNumberConfirmed = true 
+            };
+            
+            if (userManager.Users.All(u => u.Id != defaultUser.Id))
+            {
+                await userManager.CreateAsync(defaultUser, Authorization.default_password);
+                await userManager.AddToRoleAsync(defaultUser, Authorization.default_role.ToString());
             }
         }
     }
