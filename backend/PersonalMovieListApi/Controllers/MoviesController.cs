@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalMovieListApi.Data;
 using PersonalMovieListApi.Dtos;
@@ -7,6 +8,7 @@ using PersonalMovieListApi.Models;
 
 namespace PersonalMovieListApi.Controllers
 {
+    [Authorize]
     [Route("api/movies")]
     [ApiController]
     public class MoviesController : ControllerBase
