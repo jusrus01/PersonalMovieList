@@ -14,6 +14,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PersonalMovieListApi.Data;
 using AutoMapper;
+using PersonalMovieListApi.Settings;
+using PersonalMovieListApi.Models;
+using Microsoft.AspNetCore.Identity;
+using PersonalMovieListApi.Data.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace PersonalMovieListApi
 {
@@ -35,6 +42,37 @@ namespace PersonalMovieListApi
                         .AllowAnyHeader()
                         .AllowAnyMethod()));
 
+
+            services.Configure<Jwt>(Configuration.GetSection("Jwt"));
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<UsersDbContext>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddDbContext<UsersDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UsersConnection")));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(opt =>
+                {
+                    opt.RequireHttpsMetadata = false;
+                    opt.SaveToken = false;
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -52,9 +90,11 @@ namespace PersonalMovieListApi
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection(); // CORS
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseCors(policy);
             app.UseAuthorization();
 
