@@ -10,12 +10,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { MovieCreateModalComponent } from './movies/movie-create-modal/movie-create-modal.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent, data: { title: 'Login'} },
   { path: "register", component: RegisterComponent, data: { title: 'Register'}},
-  { path: '', component: HomeComponent, data: { title: 'Home'}},
-  { path: '**', component: HomeComponent, data: { title: 'Home'}}
+  { path: '', component: HomeComponent, data: { title: 'Home'}, canActivate: [AuthGuard] },
+  { path: '**', component: HomeComponent, data: { title: 'Home'}, canActivate: [AuthGuard] }
 ]
 
 @NgModule({
@@ -35,7 +36,7 @@ export const routes: Routes = [
     RouterModule.forRoot(routes),
     NgbModule
   ],
-  providers: [Title],
+  providers: [Title, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,1 +1,28 @@
-not implemented
+<form [formGroup]="creationForm" (ngSubmit)="createAccount()" action="post">
+    <div class="form-group">
+        <label for="">Firstname</label>
+        <input formControlName="firstName" type="text" name="" id="">
+    </div>
+
+    <div class="form-group">
+        <label for="">Lastname</label>
+        <input formControlName="lastName" type="text" name="" id="">
+    </div>
+
+    <div class="form-group">
+        <label for="">Username</label>
+        <input formControlName="username" type="text" name="" id="">
+    </div>
+
+    <div class="form-group">
+        <label for="">Email</label>
+        <input formControlName="email" type="text" name="" id="">
+    </div>
+
+    <div class="form-group">
+        <label for="">Password</label>
+        <input formControlName="password" type="text" name="" id="">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>

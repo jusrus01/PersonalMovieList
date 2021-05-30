@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { MOVIES } from './mock/mock-movies';
 import { Movie } from './movies/movie';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class MoviesService {
   movies: Movie[];
   createdMovie : Movie;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private authService: AuthService) { 
     this.movies = MOVIES;
     this.createdMovie = null;
   }
@@ -24,7 +25,8 @@ export class MoviesService {
   }
 
   fetchMoviesFromApi() : Observable<Movie[]> {
-    return this.http.get<Movie[]>("http://localhost:5000/api/movies", { withCredentials: false  })
+    return this.http.get<Movie[]>("http://localhost:5000/api/movies",
+      { headers: {"Authorization" : "Bearer " + this.authService.getToken()}, withCredentials: false  })
       .pipe(
         map((data: any[]) => data.map((item: Movie) =>
           new Movie(
@@ -48,7 +50,7 @@ export class MoviesService {
   }
 
   removeMovie(movie: Movie) : Observable<any> {
-    return this.http.delete("http://localhost:5000/api/movies/" + movie.id);
+    return this.http.delete("https://localhost:5001/api/movies/" + movie.id);
   }
 
   updateMovie(movie: Movie) : void {
