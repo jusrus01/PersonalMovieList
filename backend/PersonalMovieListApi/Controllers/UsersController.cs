@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PersonalMovieListApi.Data;
@@ -17,6 +18,13 @@ namespace PersonalMovieListApi.Controllers
         public UsersController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult> RegisterAsync(RegisterModel model)
+        {
+            var result = await _userService.RegisterAsync(model);
+            return Ok(result);
         }
     }
 }
