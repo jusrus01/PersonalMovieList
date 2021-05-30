@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { MOVIES } from './mock/mock-movies';
+import { MOVIES } from '../movies/mock/mock-movies';
 
 import { MoviesService } from './movies.service';
-import { Movie } from './movies/movie';
+import { Movie } from '../movies/movie';
 
 describe('MoviesService', () => {
   let service: MoviesService;
@@ -22,7 +22,7 @@ describe('MoviesService', () => {
     let service : MoviesService;
     
     beforeEach(() => {
-      service = new MoviesService();
+      //service = new MoviesService();
     });
 
     it('should remove movie from the array', () => {

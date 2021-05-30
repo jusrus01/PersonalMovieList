@@ -5,12 +5,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-import { MoviesComponent } from './movies/movies.component';
+import { MoviesComponent } from './movies/movies-component/movies.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { MovieCreateModalComponent } from './movies/movie-create-modal/movie-create-modal.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent, data: { title: 'Login'} },

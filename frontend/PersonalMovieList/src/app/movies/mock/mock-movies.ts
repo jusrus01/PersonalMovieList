@@ -1,4 +1,4 @@
-import { Movie } from '../movies/movie';
+import { Movie } from '../../movies/movie';
 
 export const MOVIES: Movie[] = [
   { id: 0, title: 'Sherlock', comment: 'I liked it.', rating: 10 },

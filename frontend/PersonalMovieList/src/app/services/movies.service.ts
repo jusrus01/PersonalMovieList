@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MOVIES } from './mock/mock-movies';
-import { Movie } from './movies/movie';
+import { MOVIES } from '../movies/mock/mock-movies';
+import { Movie } from '../movies/movie';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 

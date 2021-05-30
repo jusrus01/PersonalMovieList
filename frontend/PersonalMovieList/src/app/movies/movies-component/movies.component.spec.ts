@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MOVIES } from '../mock/mock-movies';
-import { MoviesService } from '../movies.service';
-import { Movie } from './movie';
+import { MoviesService } from '../../services/movies.service';
+import { Movie } from '..//movie';
 
 import { MoviesComponent } from './movies.component';
 
