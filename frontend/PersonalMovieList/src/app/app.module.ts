@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: "login", component: LoginComponent, data: { title: 'Login'} },
   { path: "register", component: RegisterComponent, data: { title: 'Register'}},
   { path: '', component: HomeComponent, data: { title: 'Home'}, canActivate: [AuthGuard] },
-  { path: '**', component: HomeComponent, data: { title: 'Home'}, canActivate: [AuthGuard] }
+  { path: '**', redirectTo: '' }
 ]
 
 @NgModule({
