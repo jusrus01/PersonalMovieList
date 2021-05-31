@@ -15,11 +15,11 @@ namespace PersonalMovieListApi.Data.Users
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly Jwt _jwt;
 
-        public UserService(UserManager<User> userManager, 
+        public UserService(UserManager<IdentityUser> userManager, 
             RoleManager<IdentityRole> roleManager, IOptions<Jwt> jwt)
         {
             _userManager = userManager;
@@ -55,7 +55,7 @@ namespace PersonalMovieListApi.Data.Users
             authenticationModel.Message = $"Incorrect Credentials for user {user.Email}.";
             return authenticationModel;
         }
-        private async Task<JwtSecurityToken> CreateJwtToken(User user)
+        private async Task<JwtSecurityToken> CreateJwtToken(IdentityUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
@@ -88,7 +88,7 @@ namespace PersonalMovieListApi.Data.Users
 
         public async Task<string> RegisterAsync(RegisterModel model)
         {
-            var user = new User
+            var user = new IdentityUser
             {
                 UserName = model.Username,
                 Email = model.Email

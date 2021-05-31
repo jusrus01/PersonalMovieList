@@ -66,7 +66,7 @@ namespace PersonalMovieListApi
             });
 
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<UsersDbContext>();
             services.AddScoped<IUserService, UserService>();
 

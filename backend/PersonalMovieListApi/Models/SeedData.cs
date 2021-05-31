@@ -57,7 +57,7 @@ namespace MvcMovie.Models
             }
         }
 
-        public static async Task InitializeUsers(UserManager<User> userManager, 
+        public static async Task InitializeUsers(UserManager<IdentityUser> userManager, 
             RoleManager<IdentityRole> roleManager)
         {
             await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.Administrator.ToString()));
@@ -65,7 +65,7 @@ namespace MvcMovie.Models
             await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.User.ToString()));
             
             //Seed Default User
-            var defaultUser = new User 
+            var defaultUser = new IdentityUser 
             {   UserName = Authorization.default_username, 
                 Email = Authorization.default_email, 
                 EmailConfirmed = true, 

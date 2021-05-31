@@ -26,7 +26,7 @@ namespace PersonalMovieListApi
 
                 try
                 {
-                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await SeedData.InitializeUsers(userManager, roleManager);
