@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
       private titleService: Title,
-      private authService: AuthService) {}
+      private authService: AuthService,
+      private router: Router) {}
 
   ngOnInit(): void {
     this.titleService.setTitle('Personal Movie List - Register');
@@ -32,6 +35,7 @@ export class RegisterComponent implements OnInit {
       console.log(values);
       this.authService.createAccount(values);
       this.creationForm.reset();
+      this.router.navigate(['/login']);
     }
   }
 }

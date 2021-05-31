@@ -10,14 +10,14 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="'/home'" (click)="isMenuCollapsed = true">Home</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="getToken() == ''">
         <a data-test="login-button" class="nav-link" [routerLink]="'/login'" (click)="isMenuCollapsed = true">Login</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="getToken() == ''">
         <a data-test="register-button" class="nav-link" [routerLink]="'/register'" (click)="isMenuCollapsed = true">Register</a>
       </li>
-      <li class="nav-item log-out-button">
-        <a data-test="logout-button" class="nav-link" [routerLink]="'notimplemented'" (click)="isMenuCollapsed = true">Log out</a>
+      <li *ngIf="getToken() != ''" class="nav-item">
+        <a data-test="logout-button" class="nav-link" (click)="logOut()">Log out</a>
       </li>
     </ul>
   </div>
