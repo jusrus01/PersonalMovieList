@@ -91,9 +91,7 @@ namespace PersonalMovieListApi.Data.Users
             var user = new User
             {
                 UserName = model.Username,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
+                Email = model.Email
             };
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
@@ -108,7 +106,7 @@ namespace PersonalMovieListApi.Data.Users
             }
             else
             {
-                return $"Email {user.Email } is already registered.";
+                return $"Email { user.Email } is already registered.";
             }
         }
     }
