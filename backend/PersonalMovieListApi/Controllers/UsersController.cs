@@ -27,7 +27,7 @@ namespace PersonalMovieListApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("token")]
+        [HttpPost("login")]
         public async Task<IActionResult> GetTokenAsync(TokenRequestModel model)
         {
             var result = await _userService.GetTokenAsync(model);
