@@ -11,10 +11,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { MovieCreateModalComponent } from './movies/movie-create-modal/movie-create-modal.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LoggedInGuard } from './guards/logged-in.guard';
 
 export const routes: Routes = [
-  { path: "login", component: LoginComponent, data: { title: 'Login'} },
-  { path: "register", component: RegisterComponent, data: { title: 'Register'}},
+  { path: "login", component: LoginComponent, data: { title: 'Login'}, canActivate: [LoggedInGuard] },
+  { path: "register", component: RegisterComponent, data: { title: 'Register'}, canActivate: [LoggedInGuard]},
   { path: '', component: HomeComponent, data: { title: 'Home'}, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ]

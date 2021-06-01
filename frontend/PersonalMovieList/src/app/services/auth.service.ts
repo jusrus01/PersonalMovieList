@@ -30,7 +30,7 @@ export class AuthService {
     //   Username: values.username, Email: values.email, Password: values.password})
     //     .subscribe((data : any) => this.setToken(data.token));
     return this.http.post("http://localhost:5000/api/users/login", { 
-      Username: values.username, Email: values.email, Password: values.password});
+      Username: values.username, Email: values.email, Password: values.password });
   }
 
   setToken(token: string) : void {
@@ -38,7 +38,28 @@ export class AuthService {
     console.log("Received token ", token);
   }
 
+  logOut() : void {
+
+    localStorage.removeItem('token');
+  }
+
+  isLoggedIn() : boolean {
+    
+    if(localStorage.getItem('token') == null) {
+
+      return false;
+    }
+
+    return true;
+  }
+
   getToken() : string {
     return this.jwtToken;
+  }
+
+  setSession(token: string) : void {
+
+    localStorage.setItem('token', token);
+    console.log("Set token: ", token);
   }
 }

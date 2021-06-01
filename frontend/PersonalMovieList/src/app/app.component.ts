@@ -23,14 +23,14 @@ export class AppComponent {
     this.titleService.setTitle(this.title);
   }
 
-  getToken() : string {
+  isLoggedIn() : boolean {
 
-    return this.authService.getToken();
+    return this.authService.isLoggedIn();
   }
 
   logOut() : void {
 
-    this.authService.setToken('');
+    this.authService.logOut();
     this.router.navigate(['/login']);
   }
 }

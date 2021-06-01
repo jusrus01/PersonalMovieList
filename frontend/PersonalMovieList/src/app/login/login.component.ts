@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       console.log(values);
       this.authService.login(values)
         .subscribe((data : any) => { 
-          this.authService.setToken(data.token);
+          this.authService.setSession(data.token);
           this.creationForm.reset();
           this.router.navigate(['/']);
         });
