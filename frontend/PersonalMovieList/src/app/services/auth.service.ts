@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   getToken() : string {
-    return this.jwtToken;
+    return localStorage.getItem('token');
   }
 
   setSession(token: string) : void {

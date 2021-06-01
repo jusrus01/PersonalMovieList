@@ -45,12 +45,14 @@ export class MoviesService {
 
     this.createdMovie = new Movie(this.movies.length + 1, title, comment, rating);
 
-    this.http.post("http://localhost:5000/api/movies", { title, rating, comment })
+    this.http.post("http://localhost:5000/api/movies", { title, rating, comment },
+      { headers: {"Authorization" : "Bearer " + this.authService.getToken()}, withCredentials: false  })
       .subscribe(s => s);
   }
 
   removeMovie(movie: Movie) : Observable<any> {
-    return this.http.delete("https://localhost:5001/api/movies/" + movie.id);
+    return this.http.delete("https://localhost:5001/api/movies/" + movie.id,
+      { headers: {"Authorization" : "Bearer " + this.authService.getToken()}, withCredentials: false  });
   }
 
   updateMovie(movie: Movie) : void {
@@ -59,7 +61,8 @@ export class MoviesService {
     const rating = movie.rating;
     const comment = movie.comment;
 
-    this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment })
+    this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment },
+    { headers: {"Authorization" : "Bearer " + this.authService.getToken()}, withCredentials: false  })
       .subscribe(s => s);
   }
 }
