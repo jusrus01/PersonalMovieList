@@ -68,6 +68,7 @@ namespace PersonalMovieListApi
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<UsersDbContext>();
+
             services.AddScoped<IUserService, UserService>();
 
             services.AddDbContext<UsersDbContext>(options =>
@@ -98,7 +99,6 @@ namespace PersonalMovieListApi
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             services.AddScoped<IMoviesRepo, SqlMoviesRepo>();
 
             services.AddDbContext<MoviesDbContext>(options =>
