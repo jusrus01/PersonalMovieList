@@ -44,10 +44,17 @@ namespace PersonalMovieListApi.Controllers
         [HttpGet("{id}", Name="GetMovieById")]
         public ActionResult <MovieReadDto> GetMovieById(int id)
         {
-            var commandItem = _repo.GetMovieById(id);
-            if(commandItem != null)
+            var movie = _repo.GetMovieById(id);
+            var user = RetrieveUsernameFromJwtAuthToken();
+
+            if(user == null || movie.OwnerUsername != user)
             {
-                return Ok(_mapper.Map<MovieReadDto>(commandItem));
+                return NotFound();
+            }
+
+            if(movie != null)
+            {
+                return Ok(_mapper.Map<MovieReadDto>(movie));
             }
             return NotFound();
         }
@@ -57,7 +64,15 @@ namespace PersonalMovieListApi.Controllers
         public ActionResult<MovieReadDto> CreateMovie(MovieCreateDto movieCreateDto)
         {
             Movie newMovie = _mapper.Map<Movie>(movieCreateDto);
-            
+            string username = RetrieveUsernameFromJwtAuthToken();
+
+            if(username == null)
+            {
+                return NoContent();
+            }
+
+            newMovie.OwnerUsername = username;
+
             _repo.CreateMovie(newMovie);
             _repo.SaveChanges();
 
@@ -72,10 +87,14 @@ namespace PersonalMovieListApi.Controllers
         public ActionResult UpdateMovie(int id, MovieUpdateDto movieUpdateDto)
         {
             Movie foundMovie = _repo.GetMovieById(id);
-            if(foundMovie == null)
+            string username = RetrieveUsernameFromJwtAuthToken();
+
+            if(username == null || foundMovie == null ||
+                foundMovie.OwnerUsername != username)
             {
                 return NotFound();
             }
+
             _mapper.Map(movieUpdateDto, foundMovie);
 
             _repo.UpdateMovie(foundMovie);
@@ -89,10 +108,14 @@ namespace PersonalMovieListApi.Controllers
         public ActionResult DeleteMovie(int id)
         {
             Movie foundMovie = _repo.GetMovieById(id);
-            if(foundMovie == null)
+            string username = RetrieveUsernameFromJwtAuthToken();
+
+            if(foundMovie == null || username == null ||
+                foundMovie.OwnerUsername != username)
             {
                 return NotFound();
             }
+            
             _repo.DeleteMovie(foundMovie);
             _repo.SaveChanges();
 
