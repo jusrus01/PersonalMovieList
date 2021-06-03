@@ -39,6 +39,11 @@ namespace PersonalMovieListApi.Data
             return _context.Movies.ToList();
         }
 
+        public IEnumerable<Movie> GetAllMoviesByUserName(string username)
+        {
+            return _context.Movies.Where(movie => movie.OwnerUsername == username).ToList();
+        }
+
         public Movie GetMovieById(int id)
         {
             return _context.Movies.FirstOrDefault(m => m.Id == id);
