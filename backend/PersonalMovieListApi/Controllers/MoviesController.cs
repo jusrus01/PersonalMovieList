@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using PersonalMovieListApi.Data;
+using PersonalMovieListApi.Data.Users;
 using PersonalMovieListApi.Dtos;
 using PersonalMovieListApi.Models;
 
@@ -14,7 +18,7 @@ namespace PersonalMovieListApi.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMoviesRepo _repo;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public MoviesController(IMoviesRepo repo, IMapper mapper)
         {
@@ -26,8 +30,14 @@ namespace PersonalMovieListApi.Controllers
         [HttpGet]
         public ActionResult <IEnumerable<Movie>> GetAllMovies()
         {
-            IEnumerable<Movie> movies = _repo.GetAllMovies();
-            return Ok(_mapper.Map<IEnumerable<MovieReadDto>>(movies));
+            string username = RetrieveUsernameFromJwtAuthToken();
+
+            if(username == null)
+            {
+                return BadRequest("No authorization header found");
+            }
+
+            return Ok(_repo.GetAllMoviesByUserName(username));
         }
 
         //GET api/movies/{id}
@@ -87,6 +97,31 @@ namespace PersonalMovieListApi.Controllers
             _repo.SaveChanges();
 
             return NoContent();
+        }
+
+        private string RetrieveUsernameFromJwtAuthToken()
+        {
+            StringValues values;
+            bool result = Request.Headers.TryGetValue("Authorization", out values);
+
+            if(result)
+            {
+                string token;
+                try
+                {
+                    token = values[0].Split(' ', System.StringSplitOptions.RemoveEmptyEntries)[1];
+
+                    JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+                    JwtSecurityToken securityToken = handler.ReadToken(token) as JwtSecurityToken;
+                    
+                    return securityToken.Subject;
+                }
+                catch(Exception)
+                {
+                    return null;
+                }
+            }
+            return null;
         }
     }
 }
