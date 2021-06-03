@@ -8,13 +8,14 @@ import { HomeComponent } from './home/home.component';
 import { MoviesComponent } from './movies/movies-component/movies.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MovieCreateModalComponent } from './movies/movie-create-modal/movie-create-modal.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LoggedInGuard } from './guards/logged-in.guard';
 
 export const routes: Routes = [
-  { path: "login", component: LoginComponent, data: { title: 'Login'} },
-  { path: "register", component: RegisterComponent, data: { title: 'Register'}},
+  { path: "login", component: LoginComponent, data: { title: 'Login'}, canActivate: [LoggedInGuard] },
+  { path: "register", component: RegisterComponent, data: { title: 'Register'}, canActivate: [LoggedInGuard]},
   { path: '', component: HomeComponent, data: { title: 'Home'}, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ]
@@ -36,7 +37,10 @@ export const routes: Routes = [
     RouterModule.forRoot(routes),
     NgbModule
   ],
-  providers: [Title, AuthGuard],
+  providers: [
+    Title,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

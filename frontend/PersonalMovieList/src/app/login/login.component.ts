@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private titleService: Title,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    private router: Router) {}
 
 
   ngOnInit(): void {
@@ -30,8 +32,12 @@ export class LoginComponent implements OnInit {
       
       var values = this.creationForm.value;
       console.log(values);
-      this.authService.login(values);
-      this.creationForm.reset();
+      this.authService.login(values)
+        .subscribe((data : any) => { 
+          this.authService.setSession(data.token);
+          this.creationForm.reset();
+          this.router.navigate(['/']);
+        });
     }
   }
 }
