@@ -29,28 +29,32 @@ namespace MvcMovie.Models
                     {
                         Title = "When Harry Met Sally",
                         Rating = 1,
-                        Comment = "None"
+                        Comment = "None",
+                        OwnerUsername = "test"
                     },
 
                     new Movie
                     {
                         Title = "Ghostbusters ",
                         Rating = 2,
-                        Comment = "None"
+                        Comment = "None",
+                        OwnerUsername = "test"
                     },
 
                     new Movie
                     {
                         Title = "Ghostbusters 2",
                         Rating = 3,
-                        Comment = "None"
+                        Comment = "None",
+                        OwnerUsername = "test2"
                     },
 
                     new Movie
                     {
                         Title = "Rio Bravo",
                         Rating = 4,
-                        Comment = "None"
+                        Comment = "None",
+                        OwnerUsername = "test2"
                     }
                 );
                 context.SaveChanges();
