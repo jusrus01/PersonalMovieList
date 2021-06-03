@@ -14,8 +14,5 @@ namespace PersonalMovieListApi.Dtos
         [Required]
         [Range(0, 5)]
         public int Rating { get; set; }
-
-        [Required]
-        public string OwnerUsername { get; set; }
     }
 }
