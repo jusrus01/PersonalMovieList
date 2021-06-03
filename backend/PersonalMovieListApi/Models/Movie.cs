@@ -11,5 +11,7 @@ namespace PersonalMovieListApi.Models
         public string Comment { get; set; }
         [Required]
         public int Rating { get; set; }
+        [Required]
+        public string OwnerUsername { get; set; }
     }
 }
