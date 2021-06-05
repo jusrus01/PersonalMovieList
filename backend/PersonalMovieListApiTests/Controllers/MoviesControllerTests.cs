@@ -12,6 +12,7 @@ using PersonalMovieListApi.Data.Users;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using PersonalMovieListApi.Dtos;
 
 namespace PersonalMovieListApi.Tests
 {
@@ -142,6 +143,69 @@ namespace PersonalMovieListApi.Tests
             SetUpCorrectAuthTokenForController();
 
             var badRequest = _controller.DeleteMovie(0);
+
+            Assert.IsType<BadRequestObjectResult>(badRequest);
+        }
+
+        [Fact]
+        public void Put_WhenCalledWithAuthToken_ReturnsNoContent()
+        {
+            SetUpCorrectAuthTokenForController();
+            MovieUpdateDto updateDto = new MovieUpdateDto
+            {
+                Title = "temp",
+                Comment = "temp",
+                Rating = 1
+            };
+
+            var noContent = _controller.UpdateMovie(1, updateDto);
+
+            Assert.IsType<NoContentResult>(noContent);
+        }
+
+        [Fact]
+        public void Put_WhenCalledWithNoAuthToken_ReturnsBadRequest()
+        {
+            MovieUpdateDto updateDto = new MovieUpdateDto
+            {
+                Title = "temp",
+                Comment = "temp",
+                Rating = 1
+            };
+
+            var badRequest = _controller.UpdateMovie(1, updateDto);
+
+            Assert.IsType<BadRequestObjectResult>(badRequest);
+        }
+
+        [Fact]
+        public void Put_WhenCalledWithBadParams_ReturnsBadRequest()
+        {
+            SetUpCorrectAuthTokenForController();
+            MovieUpdateDto updateDto = new MovieUpdateDto
+            {
+                Title = "temp",
+                Comment = "temp",
+                Rating = 1
+            };
+
+            var notFound = _controller.UpdateMovie(-10, updateDto);
+
+            Assert.IsType<NotFoundResult>(notFound);
+        }
+
+        [Fact]
+        public void Put_WhenCalledOnNotOwnedMovie_ReturnsBadRequest()
+        {
+            SetUpCorrectAuthTokenForController();
+            MovieUpdateDto updateDto = new MovieUpdateDto
+            {
+                Title = "temp",
+                Comment = "temp",
+                Rating = 1
+            };
+
+            var badRequest = _controller.UpdateMovie(0, updateDto);
 
             Assert.IsType<BadRequestObjectResult>(badRequest);
         }
