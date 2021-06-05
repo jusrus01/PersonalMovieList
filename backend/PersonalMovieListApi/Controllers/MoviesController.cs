@@ -88,11 +88,20 @@ namespace PersonalMovieListApi.Controllers
         {
             Movie foundMovie = _repo.GetMovieById(id);
             string username = RetrieveUsernameFromJwtAuthToken();
+            
+            if(username == null)
+            {
+                return BadRequest("No authorization header found");
+            }
 
-            if(username == null || foundMovie == null ||
-                foundMovie.OwnerUsername != username)
+            if(foundMovie == null)
             {
                 return NotFound();
+            }
+
+            if(foundMovie.OwnerUsername != username)
+            {
+                return BadRequest("You do not have permission to delete this item");
             }
 
             _mapper.Map(movieUpdateDto, foundMovie);
