@@ -5,21 +5,22 @@ using System.Linq;
 
 namespace PersonalMovieListApi.Tests
 {
-        public class MockMoviesRepo : IMoviesRepo
+    public class MockMoviesRepo : IMoviesRepo
     {
+        IEnumerable<Movie> mockMovies;
         public void CreateMovie(Movie movie)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void DeleteMovie(Movie movie)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public IEnumerable<Movie> GetAllMovies()
         {
-            var mockMovies = new List<Movie>
+            mockMovies = new List<Movie>
             {
                 new Movie
                 {
@@ -61,23 +62,33 @@ namespace PersonalMovieListApi.Tests
         }
 
         public Movie GetMovieById(int id)
-        {
-            throw new System.NotImplementedException();
+        {  
+            mockMovies = GetAllMovies();
+            try
+            {
+                Movie movie = mockMovies.Where(movie => movie.Id == id)
+                    .FirstOrDefault();
+
+                return movie;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Movie GetMovieByTitle(string title)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
         public bool SaveChanges()
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
         public void UpdateMovie(Movie movie)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

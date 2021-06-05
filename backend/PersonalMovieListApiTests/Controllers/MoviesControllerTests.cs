@@ -97,6 +97,55 @@ namespace PersonalMovieListApi.Tests
             Assert.IsType<OkObjectResult>(okResult.Result);
         }
 
+        [Fact]
+        public void Delete_WhenCalledWithoutAuthToken_ReturnsBadRequest()
+        {
+            var badRequest = _controller.DeleteMovie(2);
+            Assert.IsType<BadRequestObjectResult>(badRequest);
+        }
+
+        [Fact]
+        public void Delete_WhenCalledWithBadAuthToken_ReturnsBadRequest()
+        {
+            _controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            _controller.ControllerContext.HttpContext.Request.Headers["Authorization"] = "Bearer some random string";
+
+            var badRequest = _controller.DeleteMovie(1);
+
+            Assert.IsType<BadRequestObjectResult>(badRequest);
+        }
+
+        [Fact]
+        public void Delete_WhenCalledWithAuthTokenButBadMovieParams_ReturnsNotFound()
+        {
+            SetUpCorrectAuthTokenForController();
+
+            var notFound = _controller.DeleteMovie(-10);
+
+            Assert.IsType<NotFoundResult>(notFound);
+        }
+
+
+        [Fact]
+        public void Delete_WhenCalledWithAuthToken_ReturnsNoContent()
+        {
+            SetUpCorrectAuthTokenForController();
+
+            var noContent = _controller.DeleteMovie(1);
+
+            Assert.IsType<NoContentResult>(noContent);
+        }
+
+        [Fact]
+        public void Delete_WhenCalledWithAuthTokenButBadOwner_ReturnsBadRequest()
+        {
+            SetUpCorrectAuthTokenForController();
+
+            var badRequest = _controller.DeleteMovie(0);
+
+            Assert.IsType<BadRequestObjectResult>(badRequest);
+        }
+
         private void SetUpCorrectAuthTokenForController()
         {
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
