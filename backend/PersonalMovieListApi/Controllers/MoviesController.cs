@@ -110,10 +110,19 @@ namespace PersonalMovieListApi.Controllers
             Movie foundMovie = _repo.GetMovieById(id);
             string username = RetrieveUsernameFromJwtAuthToken();
 
-            if(foundMovie == null || username == null ||
-                foundMovie.OwnerUsername != username)
+            if(username == null)
+            {
+                return BadRequest("Bad authentication header");
+            }
+
+            if(foundMovie == null)
             {
                 return NotFound();
+            }
+
+            if(foundMovie.OwnerUsername != username)
+            {
+                return BadRequest("You do not have permission to delete this item");
             }
             
             _repo.DeleteMovie(foundMovie);
