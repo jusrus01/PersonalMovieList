@@ -124,27 +124,27 @@ namespace PersonalMovieListApi.Controllers
 
         private string RetrieveUsernameFromJwtAuthToken()
         {
-            StringValues values;
-            bool result = Request.Headers.TryGetValue("Authorization", out values);
-
-            if(result)
+            try
             {
-                string token;
-                try
+                StringValues values;
+                bool result = Request.Headers.TryGetValue("Authorization", out values);
+
+                if(result)
                 {
-                    token = values[0].Split(' ', System.StringSplitOptions.RemoveEmptyEntries)[1];
+                    string token = values[0].Split(' ', System.StringSplitOptions.RemoveEmptyEntries)[1];
 
                     JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
                     JwtSecurityToken securityToken = handler.ReadToken(token) as JwtSecurityToken;
-                    
+                        
                     return securityToken.Subject;
                 }
-                catch(Exception)
-                {
-                    return null;
-                }
+
+                return null;
             }
-            return null;
+            catch
+            {
+                return null;
+            }
         }
     }
 }
