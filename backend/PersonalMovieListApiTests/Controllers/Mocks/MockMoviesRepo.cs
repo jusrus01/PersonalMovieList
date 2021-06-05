@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PersonalMovieListApi.Data;
 using PersonalMovieListApi.Models;
+using System.Linq;
 
 namespace PersonalMovieListApi.Tests
 {
@@ -22,6 +23,7 @@ namespace PersonalMovieListApi.Tests
             {
                 new Movie
                 {
+                    Id = 0,
                     Title = "test1",
                     Comment = "test1",
                     Rating = 1,
@@ -30,6 +32,7 @@ namespace PersonalMovieListApi.Tests
 
                 new Movie
                 {
+                    Id = 1,
                     Title = "test2",
                     Comment = "test2",
                     Rating = 1,
@@ -38,10 +41,11 @@ namespace PersonalMovieListApi.Tests
 
                 new Movie
                 {
+                    Id = 2,
                     Title = "test3",
                     Comment = "test3",
                     Rating = 1,
-                    OwnerUsername = "test3"
+                    OwnerUsername = "test2"
                 },
             };
 
@@ -50,7 +54,10 @@ namespace PersonalMovieListApi.Tests
 
         public IEnumerable<Movie> GetAllMoviesByUserName(string username)
         {
-            throw new System.NotImplementedException();
+            var movies = GetAllMovies();
+            
+            return movies.Where(movie => movie.OwnerUsername == username)
+                .ToList();
         }
 
         public Movie GetMovieById(int id)
