@@ -42,7 +42,7 @@ namespace PersonalMovieListApi.Controllers
 
         //GET api/movies/{id}
         [HttpGet("{id}", Name="GetMovieById")]
-        public ActionResult <MovieReadDto> GetMovieById(int id)
+        private ActionResult <MovieReadDto> GetMovieById(int id)
         {
             var movie = _repo.GetMovieById(id);
             var user = RetrieveUsernameFromJwtAuthToken();
@@ -63,17 +63,30 @@ namespace PersonalMovieListApi.Controllers
         [HttpPost]
         public ActionResult<MovieReadDto> CreateMovie(MovieCreateDto movieCreateDto)
         {
+            if(movieCreateDto == null)
+            {
+                return BadRequest("Bad params");
+            }
+
             Movie newMovie = _mapper.Map<Movie>(movieCreateDto);
             string username = RetrieveUsernameFromJwtAuthToken();
 
             if(username == null)
             {
-                return NoContent();
+                return BadRequest();
             }
 
             newMovie.OwnerUsername = username;
 
-            _repo.CreateMovie(newMovie);
+            try
+            {
+                _repo.CreateMovie(newMovie);
+            }
+            catch(ArgumentNullException e)
+            {
+                return BadRequest(e.Message);
+            }
+
             _repo.SaveChanges();
 
             MovieReadDto createdMovie = _mapper.Map<MovieReadDto>(newMovie);
