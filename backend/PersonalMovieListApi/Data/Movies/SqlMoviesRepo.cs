@@ -34,11 +34,6 @@ namespace PersonalMovieListApi.Data
             _context.Movies.Remove(movie);
         }
 
-        public IEnumerable<Movie> GetAllMovies()
-        {
-            return _context.Movies.ToList();
-        }
-
         public IEnumerable<Movie> GetAllMoviesByUserName(string username)
         {
             return _context.Movies.Where(movie => movie.OwnerUsername == username).ToList();
@@ -47,11 +42,6 @@ namespace PersonalMovieListApi.Data
         public Movie GetMovieById(int id)
         {
             return _context.Movies.FirstOrDefault(m => m.Id == id);
-        }
-
-        public Movie GetMovieByTitle(string title)
-        {
-            throw new System.NotImplementedException();
         }
 
         public bool SaveChanges()
