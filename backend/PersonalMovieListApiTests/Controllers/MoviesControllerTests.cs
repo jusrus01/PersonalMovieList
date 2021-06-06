@@ -210,6 +210,55 @@ namespace PersonalMovieListApi.Tests
             Assert.IsType<BadRequestObjectResult>(badRequest);
         }
 
+        
+        [Fact]
+        public void Post_WhenCalledWithAuthToken_ReturnsCreatedAtRouteResult()
+        {
+            SetUpCorrectAuthTokenForController();
+            string title = "test";
+            string comment = "test";
+            int rating = 1;
+            MovieCreateDto createdMovie = new MovieCreateDto
+            {
+                Title = title,
+                Comment = comment,
+                Rating = rating
+            };
+
+            var createdAtRoute = _controller.CreateMovie(createdMovie);
+
+            Assert.IsType<CreatedAtRouteResult>(createdAtRoute.Result);
+        }
+
+        [Fact]
+        public void Post_WhenCalledWithAuthTokenAndBadParams_ReturnsBadRequest()
+        {
+            SetUpCorrectAuthTokenForController();
+            MovieCreateDto createdMovie = null;
+
+            var badRequest = _controller.CreateMovie(createdMovie);
+
+            Assert.IsType<BadRequestObjectResult>(badRequest.Result);
+        }
+
+        [Fact]
+        public void Post_WhenCalledWithNoAuthToken_ReturnsBadRequest()
+        {
+            string title = "test";
+            string comment = "test";
+            int rating = 1;
+            MovieCreateDto createdMovie = new MovieCreateDto
+            {
+                Title = title,
+                Comment = comment,
+                Rating = rating
+            };
+
+            var badRequest = _controller.CreateMovie(createdMovie);
+
+            Assert.IsType<BadRequestResult>(badRequest.Result);
+        }
+        
         private void SetUpCorrectAuthTokenForController()
         {
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
