@@ -15,9 +15,14 @@ namespace PersonalMovieListApiTests.Data.Users
 {
     public class UserServiceTests
     {   
+        private readonly string defaultPassword = "passw!!@3123OSAdord";
+        private readonly string defaultEmail = "user@user.com";
+
         private readonly UsersDbContext _context;
         private readonly UserService _service;
         private readonly UserManager<IdentityUser> _manager;
+        private readonly IdentityUser defaultUser;
+        private bool userCreatedOnce = false;
         
         public UserServiceTests()
         {
@@ -34,16 +39,23 @@ namespace PersonalMovieListApiTests.Data.Users
                 null, null, null, null, null, null);
 
             RoleManager<IdentityRole> roles = new RoleManager<IdentityRole>(rolesStore, null, null, null, null);
+            
             Jwt jwt = new Jwt
             {
-                Key = "C1CF4B7E4F55CA4",
+                Key = "C1CF4B7EASDSADASD4F55CA4",
                 Issuer = "Mock",
                 Audience = "MockUser",
                 DurationInMinutes = 3
             };
+
             IOptions<Jwt> jwtOptions = Options.Create(jwt);
 
             _service = new UserService(_manager, roles, jwtOptions);
+        }
+
+        private async void CreateDefaultUser()
+        {
+            await _manager.CreateAsync(defaultUser, defaultPassword);
         }
 
         [Fact]
@@ -52,26 +64,55 @@ namespace PersonalMovieListApiTests.Data.Users
             AuthenticationModel model = await _service.GetTokenAsync(null);
 
             Assert.False(model.IsAuthenticated);
+            Assert.Equal(null, model.Token);
         }
 
         [Fact]
-        public void GetTokenAsync_WhenCalledWithCorrectTokenModel_ReturnsAuthorizedAuthenticationModel()
+        public async void GetTokenAsync_WhenCalledWithCorrectTokenModel_ReturnsAuthorizedAuthenticationModel()
         {
-        //Given
-        
-        //When
-        
-        //Then
+            IdentityUser user = new IdentityUser
+            {
+                UserName = "user1",
+                Email = defaultEmail
+            };
+
+            await _manager.CreateAsync(user, defaultPassword);
+
+            TokenRequestModel requestModel = new TokenRequestModel
+            {
+                Email = defaultEmail,
+                Password = defaultPassword                
+            };
+
+            AuthenticationModel authModel = await _service.GetTokenAsync(requestModel);
+
+            Assert.True(authModel.IsAuthenticated);
+            Assert.False(authModel.Token == null);
         }
 
         [Fact]
-        public void GetTokenAsync_WhenCalledWithInCorrectTokenModel_ReturnsUnauthorizedAuthenticationModel()
+        public async void GetTokenAsync_WhenCalledWithInCorrectTokenModel_ReturnsUnauthorizedAuthenticationModel()
         {
-        //Given
-        
-        //When
-        
-        //Then
+            string email = "w@w.com";
+
+            IdentityUser user = new IdentityUser
+            {
+                UserName = "user2",
+                Email = email
+            };
+
+            await _manager.CreateAsync(user, defaultPassword);
+
+            TokenRequestModel requestModel = new TokenRequestModel
+            {
+                Email = email,
+                Password = defaultPassword + "111"               
+            };
+
+            AuthenticationModel authModel = await _service.GetTokenAsync(requestModel);
+
+            Assert.False(authModel.IsAuthenticated);
+            Assert.True(authModel.Token == null);
         }
 
         [Fact]
