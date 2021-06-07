@@ -4,6 +4,7 @@ using PersonalMovieListApi.Models;
 using Xunit;
 using System;
 using System.Linq;
+using PersonalMovieListApi.Dtos;
 
 namespace PersonalMovieListApiTests.Data.Movies
 {
@@ -79,8 +80,6 @@ namespace PersonalMovieListApiTests.Data.Movies
                 movie.Rating == rating &&
                 movie.Title == title).SingleOrDefault();
 
-            _context.Dispose();
-
             Assert.Equal(title, actualMovie.Title);
             Assert.Equal(comment, actualMovie.Comment);
             Assert.Equal(rating, actualMovie.Rating);
@@ -115,8 +114,6 @@ namespace PersonalMovieListApiTests.Data.Movies
                 movie.Rating == rating &&
                 movie.Title == title).SingleOrDefault();
 
-            _context.Dispose();
-
             Assert.Equal(null, movieShouldBeNull);
         }
 
@@ -137,7 +134,6 @@ namespace PersonalMovieListApiTests.Data.Movies
             };
 
             _repo.DeleteMovie(deleteMovie);
-            _context.Dispose();
 
             Assert.True(true);
         }
@@ -164,8 +160,6 @@ namespace PersonalMovieListApiTests.Data.Movies
                     correctMovies = false;
                     break;
                 }
-
-            _context.Dispose();
             
             Assert.True(correctMovies);
         }
@@ -177,8 +171,6 @@ namespace PersonalMovieListApiTests.Data.Movies
 
             var movies = _repo.GetAllMoviesByUserName(owner);
 
-            _context.Dispose();
-
             Assert.Equal(0, movies.Count());
         }
 
@@ -186,7 +178,6 @@ namespace PersonalMovieListApiTests.Data.Movies
         public void GetAllMoviesByUserName_WhenCalledWithNull_DoesNotThrow()
         {
             _repo.GetAllMoviesByUserName(null);
-            _context.Dispose();
 
             Assert.True(true);
         }
@@ -194,37 +185,68 @@ namespace PersonalMovieListApiTests.Data.Movies
         [Fact]
         public void GetMovieById_WhenCalledWithNonExistingId_DoesNotThrow()
         {
-            
+            Movie foundMovie = _repo.GetMovieById(-10);
+
+            Assert.Equal(null, foundMovie);
         }
 
         [Fact]
-        public void GetMovieById_WhenCalledWithCorredId_ReturnsMovie()
+        public void GetMovieById_WhenCalledWithCorrectId_ReturnsMovie()
         {
-            
+            Movie sampleMovie = _context.Movies.Last();
+            int id = sampleMovie.Id;
+
+            Movie foundMovie = _repo.GetMovieById(id);
+
+            Assert.Equal(sampleMovie.Title, foundMovie.Title);
+            Assert.Equal(sampleMovie.Comment, foundMovie.Comment);
+            Assert.Equal(sampleMovie.Id, foundMovie.Id);
+            Assert.Equal(sampleMovie.OwnerUsername, foundMovie.OwnerUsername);
+            Assert.Equal(sampleMovie.Rating, foundMovie.Rating);
         }
 
         [Fact]
-        public void GetMovieById_WhenCalledWithNegativeId_DoesNotThrow()
+        public void UpdateMovie_WhenCalledWithNull_ThrowsArgumentNullException()
         {
-
-        }
-
-        [Fact]
-        public void UpdateMovie_WhenCalledWithNull_ThrowsArgumentException()
-        {
-
+            Assert.Throws<ArgumentNullException>(() => _repo.UpdateMovie(null));
         }
 
         [Fact]
         public void UpdateMovie_WhenCalledWithCorrectMovie_UpdatesMovie()
         {
-            
+            string title = "new title";
+            string comment = "new comment";
+            int rating = 4;
+
+            Movie sampleMovie = _context.Movies.First();
+            sampleMovie.Title = title;
+            sampleMovie.Comment = comment;
+            sampleMovie.Rating = rating;
+
+            _repo.UpdateMovie(sampleMovie);
+            _repo.SaveChanges();
+
+            Movie updatedMovie = _context.Movies.First();
+
+            Assert.Equal(title, updatedMovie.Title);
+            Assert.Equal(comment, updatedMovie.Comment);
+            Assert.Equal(rating, updatedMovie.Rating);
         }
 
         [Fact]
         public void UpdateMovie_WhenCalledWithNotCorrectMovie_DoesNotThrow()
         {
-            
+            Movie randomMovie = new Movie
+            {
+                Title = "random",
+                Comment = "random",
+                Rating = 1
+            };
+
+            _repo.UpdateMovie(randomMovie);
+            _repo.SaveChanges();
+
+            Assert.True(true);
         }
     }
 }
