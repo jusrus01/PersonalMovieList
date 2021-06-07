@@ -29,14 +29,12 @@ namespace PersonalMovieListApi.Data.Users
 
         public async Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model)
         {
-            var authenticationModel = new AuthenticationModel();
-
             if(model == null)
             {
-                authenticationModel.IsAuthenticated = false;
-                authenticationModel.Message = "Bad values received";
-                return authenticationModel;
+                throw new ArgumentNullException();
             }
+
+            var authenticationModel = new AuthenticationModel();
             
             var user = await _userManager.FindByEmailAsync(model.Email);
 
@@ -104,7 +102,7 @@ namespace PersonalMovieListApi.Data.Users
         {
             if(model == null)
             {
-                return "Bad data";
+                throw new ArgumentNullException();
             }
 
             var user = new IdentityUser
