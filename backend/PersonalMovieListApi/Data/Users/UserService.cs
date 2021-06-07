@@ -46,17 +46,23 @@ namespace PersonalMovieListApi.Data.Users
                 authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
                 return authenticationModel;
             }
-
-            if (await _userManager.CheckPasswordAsync(user, model.Password))
+            try
             {
-                authenticationModel.IsAuthenticated = true;
-                JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
-                authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-                authenticationModel.Email = user.Email;
-                authenticationModel.UserName = user.UserName;
-                var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
-                authenticationModel.Roles = rolesList.ToList();
-                return authenticationModel;
+                if (await _userManager.CheckPasswordAsync(user, model.Password))
+                {
+                    authenticationModel.IsAuthenticated = true;
+                    JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
+                    authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                    authenticationModel.Email = user.Email;
+                    authenticationModel.UserName = user.UserName;
+                    var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
+                    authenticationModel.Roles = rolesList.ToList();
+                    return authenticationModel;
+                }
+            }
+            catch(ArgumentNullException)
+            {
+                // logger is null
             }
             
             authenticationModel.IsAuthenticated = false;
@@ -103,6 +109,7 @@ namespace PersonalMovieListApi.Data.Users
             };
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
+
             if (userWithSameEmail == null)
             {
                 var result = await _userManager.CreateAsync(user, model.Password);
