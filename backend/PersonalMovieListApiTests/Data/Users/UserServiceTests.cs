@@ -11,6 +11,7 @@ using PersonalMovieListApi.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
 using System.Linq;
+using System;
 
 namespace PersonalMovieListApiTests.Data.Users
 {
@@ -62,12 +63,9 @@ namespace PersonalMovieListApiTests.Data.Users
         }
 
         [Fact]
-        public async void GetTokenAsync_WhenCalledWithNull_ReturnsUnauthorizedAuthenticationModel()
+        public async void GetTokenAsync_WhenCalledWithNull_ThrowsArgumentNullException()
         {
-            AuthenticationModel model = await _service.GetTokenAsync(null);
-
-            Assert.False(model.IsAuthenticated);
-            Assert.Equal(null, model.Token);
+            await Assert.ThrowsAsync<ArgumentNullException>(() => _service.GetTokenAsync(null));
         }
 
         [Fact]
@@ -150,13 +148,9 @@ namespace PersonalMovieListApiTests.Data.Users
         }
 
         [Fact]
-        public async void RegisterAsync_WhenCalledWithNull_DoesNotThrow()
+        public async void RegisterAsync_WhenCalledWithNull_ThrowsArgumentNullException()
         {
-            RegisterModel model = null;
-
-            await _service.RegisterAsync(model);
-
-            Assert.True(true);
+           await Assert.ThrowsAsync<ArgumentNullException>(() => _service.RegisterAsync(null));
         }
 
         [Fact]

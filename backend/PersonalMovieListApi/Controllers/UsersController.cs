@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -23,15 +24,29 @@ namespace PersonalMovieListApi.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(RegisterModel model)
         {
-            var result = await _userService.RegisterAsync(model);
-            return Ok(result);
+            try
+            {
+                var result = await _userService.RegisterAsync(model);
+                return Ok(result);
+            }
+            catch(ArgumentNullException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> GetTokenAsync(TokenRequestModel model)
         {
-            var result = await _userService.GetTokenAsync(model);
-            return Ok(result);
+            try
+            {
+                var result = await _userService.GetTokenAsync(model);
+                return Ok(result);
+            }
+            catch(ArgumentNullException)
+            {
+                return BadRequest();
+            }
         }
     }
 }
