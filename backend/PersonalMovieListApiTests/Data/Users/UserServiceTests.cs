@@ -10,6 +10,7 @@ using PersonalMovieListApi.Models;
 using PersonalMovieListApi.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace PersonalMovieListApiTests.Data.Users
 {
@@ -21,6 +22,7 @@ namespace PersonalMovieListApiTests.Data.Users
         private readonly UsersDbContext _context;
         private readonly UserService _service;
         private readonly UserManager<IdentityUser> _manager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IdentityUser defaultUser;
         private bool userCreatedOnce = false;
         
@@ -38,8 +40,9 @@ namespace PersonalMovieListApiTests.Data.Users
             _manager = new UserManager<IdentityUser>(store, null, new PasswordHasher<IdentityUser>(),
                 null, null, null, null, null, null);
 
-            RoleManager<IdentityRole> roles = new RoleManager<IdentityRole>(rolesStore, null, null, null, null);
-            
+            _roleManager = new RoleManager<IdentityRole>(rolesStore, null, null, null, null);
+
+
             Jwt jwt = new Jwt
             {
                 Key = "C1CF4B7EASDSADASD4F55CA4",
@@ -50,7 +53,7 @@ namespace PersonalMovieListApiTests.Data.Users
 
             IOptions<Jwt> jwtOptions = Options.Create(jwt);
 
-            _service = new UserService(_manager, roles, jwtOptions);
+            _service = new UserService(_manager, _roleManager, jwtOptions);
         }
 
         private async void CreateDefaultUser()
@@ -116,21 +119,68 @@ namespace PersonalMovieListApiTests.Data.Users
         }
 
         [Fact]
-        public void RegisterAsync_WhenCalledWithExistingUser_DoesNotCreateUser()
+        public async void RegisterAsync_WhenCalledWithExistingUser_DoesNotCreateUser()
         {
+            string username = "user321";
+            string email = "a@a.com";
 
-        }
+            IdentityUser existingUser = new IdentityUser
+            {
+                UserName = username,
+                Email = email
+            };
 
-        [Fact]
-        public void RegisterAsync_WhenCalledWithNull_DoesNotThrow()
-        {
-
-        }
-
-        [Fact]
-        public void RegisterAsync_WhenCalledCorrectUser_CreatesUser()
-        {
+            await _manager.CreateAsync(existingUser, defaultPassword);
             
+            RegisterModel model = new RegisterModel
+            {
+                Username = username,
+                Email = email,
+                Password = defaultPassword
+            };
+
+            string msg = await _service.RegisterAsync(model);
+
+            var foundUsers = _manager.Users.Where(user =>
+                user.UserName == existingUser.UserName &&
+                user.Email == existingUser.Email);
+
+
+            Assert.Equal(1, foundUsers.Count());
+        }
+
+        [Fact]
+        public async void RegisterAsync_WhenCalledWithNull_DoesNotThrow()
+        {
+            RegisterModel model = null;
+
+            await _service.RegisterAsync(model);
+
+            Assert.True(true);
+        }
+
+        [Fact]
+        public async void RegisterAsync_WhenCalledCorrectUser_CreatesUser()
+        {
+            string username = "user321231";
+            string email = "a@2a.com";
+            await _roleManager.CreateAsync(new IdentityRole("User"));
+            
+            RegisterModel model = new RegisterModel
+            {
+                Username = username,
+                Email = email,
+                Password = defaultPassword
+            };
+
+            string msg = await _service.RegisterAsync(model);
+
+            var foundUsers = _manager.Users.Where(user =>
+                user.UserName == model.Username &&
+                user.Email == model.Email);
+
+
+            Assert.Equal(1, foundUsers.Count());
         }
     }
 }
