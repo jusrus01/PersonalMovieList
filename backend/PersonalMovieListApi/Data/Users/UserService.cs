@@ -102,6 +102,11 @@ namespace PersonalMovieListApi.Data.Users
 
         public async Task<string> RegisterAsync(RegisterModel model)
         {
+            if(model == null)
+            {
+                return "Bad data";
+            }
+
             var user = new IdentityUser
             {
                 UserName = model.Username,
@@ -109,8 +114,9 @@ namespace PersonalMovieListApi.Data.Users
             };
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
+            var userWithSameUsername = await _userManager.FindByNameAsync(model.Username);
 
-            if (userWithSameEmail == null)
+            if (userWithSameEmail == null && userWithSameUsername == null)
             {
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -121,7 +127,7 @@ namespace PersonalMovieListApi.Data.Users
             }
             else
             {
-                return $"Email { user.Email } is already registered.";
+                return $"Email { user.Email } or username { user.UserName } already registered.";
             }
         }
     }
