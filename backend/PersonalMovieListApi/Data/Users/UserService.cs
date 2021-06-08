@@ -42,19 +42,23 @@ namespace PersonalMovieListApi.Data.Users
             {
                 authenticationModel.IsAuthenticated = false;
                 authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
+
                 return authenticationModel;
             }
             try
             {
                 if (await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    authenticationModel.IsAuthenticated = true;
                     JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
+
+                    authenticationModel.IsAuthenticated = true;
                     authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                     authenticationModel.Email = user.Email;
                     authenticationModel.UserName = user.UserName;
+
                     var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
                     authenticationModel.Roles = rolesList.ToList();
+
                     return authenticationModel;
                 }
             }
@@ -71,11 +75,14 @@ namespace PersonalMovieListApi.Data.Users
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
+
             var roleClaims = new List<Claim>();
+
             for (int i = 0; i < roles.Count; i++)
             {
                 roleClaims.Add(item: new Claim("roles", roles[i]));
             }
+
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
@@ -117,15 +124,17 @@ namespace PersonalMovieListApi.Data.Users
             if (userWithSameEmail == null && userWithSameUsername == null)
             {
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Authorization.default_role.ToString());                 
+                    await _userManager.AddToRoleAsync(user, "User");                 
                 }
+
                 return $"User Registered with username {user.UserName}";
             }
             else
             {
-                return $"Email { user.Email } or username { user.UserName } already registered.";
+                return $"Email {user.Email} or username {user.UserName} already registered.";
             }
         }
     }

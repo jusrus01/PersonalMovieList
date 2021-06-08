@@ -20,7 +20,8 @@ namespace PersonalMovieListApiTests.Data.Movies
 
 
             _context = new MoviesDbContext(options);
-            _context.Movies.Add(new Movie
+
+            _context.Movies.Add(new MovieModel
             {
                 Title = "test1",
                 Comment = "test1",
@@ -28,7 +29,7 @@ namespace PersonalMovieListApiTests.Data.Movies
                 OwnerUsername = "test1"
             });    
 
-            _context.Movies.Add(new Movie
+            _context.Movies.Add(new MovieModel
             {
                 Title = "test2",
                 Comment = "test2",
@@ -36,7 +37,7 @@ namespace PersonalMovieListApiTests.Data.Movies
                 OwnerUsername = "test2"
             });    
 
-            _context.Movies.Add(new Movie
+            _context.Movies.Add(new MovieModel
             {
                 Title = "test3",
                 Comment = "test3",
@@ -50,9 +51,7 @@ namespace PersonalMovieListApiTests.Data.Movies
         [Fact]
         public void CreateMovie_WhenCalledWithNull_ThrowsArgumentNullException()
         {
-            Movie movieNull = null;
-
-            Assert.Throws<ArgumentNullException>(() => { _repo.CreateMovie(movieNull); _context.Dispose(); });
+            Assert.Throws<ArgumentNullException>(() => _repo.CreateMovie(null));
         }
 
         [Fact]
@@ -63,7 +62,7 @@ namespace PersonalMovieListApiTests.Data.Movies
             int rating = 1;
             string owner = "owner";
 
-            Movie createdMovie = new Movie
+            var createdMovie = new MovieModel
             {
                 Title = title,
                 Comment = comment,
@@ -74,7 +73,7 @@ namespace PersonalMovieListApiTests.Data.Movies
             _repo.CreateMovie(createdMovie);
             _repo.SaveChanges();
 
-            Movie actualMovie = _context.Movies.Where(movie => 
+            var actualMovie = _context.Movies.Where(movie => 
                 movie.Comment == comment &&
                 movie.OwnerUsername == owner &&
                 movie.Rating == rating &&
@@ -94,7 +93,7 @@ namespace PersonalMovieListApiTests.Data.Movies
             int rating = 1;
             string owner = "owner";
 
-            Movie deleteMovie = new Movie
+            var deleteMovie = new MovieModel
             {
                 Title = title,
                 Comment = comment,
@@ -108,7 +107,7 @@ namespace PersonalMovieListApiTests.Data.Movies
             _repo.DeleteMovie(deleteMovie);
             _repo.SaveChanges();
 
-            Movie movieShouldBeNull  = _context.Movies.Where(movie => 
+            var movieShouldBeNull  = _context.Movies.Where(movie => 
                 movie.Comment == comment &&
                 movie.OwnerUsername == owner &&
                 movie.Rating == rating &&
@@ -125,7 +124,7 @@ namespace PersonalMovieListApiTests.Data.Movies
             int rating = 1;
             string owner = "owner";
 
-            Movie deleteMovie = new Movie
+            var deleteMovie = new MovieModel
             {
                 Title = title,
                 Comment = comment,
@@ -141,9 +140,7 @@ namespace PersonalMovieListApiTests.Data.Movies
         [Fact]
         public void DeleteMovie_WhenCalledWithNull_ThrowsArgumentNullException()
         {
-            Movie movieNull = null;
-
-            Assert.Throws<ArgumentNullException>(() => { _repo.DeleteMovie(movieNull); _context.Dispose(); });
+            Assert.Throws<ArgumentNullException>(() => _repo.DeleteMovie(null));
         }
 
         [Fact]
@@ -155,11 +152,13 @@ namespace PersonalMovieListApiTests.Data.Movies
             var movies = _repo.GetAllMoviesByUserName(owner);
 
             foreach(var movie in movies)
+            {
                 if(movie.OwnerUsername != owner)
                 {
                     correctMovies = false;
                     break;
                 }
+            }
             
             Assert.True(correctMovies);
         }
@@ -185,7 +184,7 @@ namespace PersonalMovieListApiTests.Data.Movies
         [Fact]
         public void GetMovieById_WhenCalledWithNonExistingId_DoesNotThrow()
         {
-            Movie foundMovie = _repo.GetMovieById(-10);
+            var foundMovie = _repo.GetMovieById(-10);
 
             Assert.Equal(null, foundMovie);
         }
@@ -193,10 +192,10 @@ namespace PersonalMovieListApiTests.Data.Movies
         [Fact]
         public void GetMovieById_WhenCalledWithCorrectId_ReturnsMovie()
         {
-            Movie sampleMovie = _context.Movies.Last();
+            var sampleMovie = _context.Movies.Last();
             int id = sampleMovie.Id;
 
-            Movie foundMovie = _repo.GetMovieById(id);
+            var foundMovie = _repo.GetMovieById(id);
 
             Assert.Equal(sampleMovie.Title, foundMovie.Title);
             Assert.Equal(sampleMovie.Comment, foundMovie.Comment);
@@ -218,7 +217,7 @@ namespace PersonalMovieListApiTests.Data.Movies
             string comment = "new comment";
             int rating = 4;
 
-            Movie sampleMovie = _context.Movies.First();
+            var sampleMovie = _context.Movies.First();
             sampleMovie.Title = title;
             sampleMovie.Comment = comment;
             sampleMovie.Rating = rating;
@@ -226,7 +225,7 @@ namespace PersonalMovieListApiTests.Data.Movies
             _repo.UpdateMovie(sampleMovie);
             _repo.SaveChanges();
 
-            Movie updatedMovie = _context.Movies.First();
+            var updatedMovie = _context.Movies.First();
 
             Assert.Equal(title, updatedMovie.Title);
             Assert.Equal(comment, updatedMovie.Comment);
@@ -236,7 +235,7 @@ namespace PersonalMovieListApiTests.Data.Movies
         [Fact]
         public void UpdateMovie_WhenCalledWithNotCorrectMovie_DoesNotThrow()
         {
-            Movie randomMovie = new Movie
+            var randomMovie = new MovieModel
             {
                 Title = "random",
                 Comment = "random",

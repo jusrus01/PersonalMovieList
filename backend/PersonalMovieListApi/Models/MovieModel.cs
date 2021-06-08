@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PersonalMovieListApi.Models
 {
-    public class Movie 
+    public class MovieModel 
     {
         [Key]
         public int Id { get; set; }

@@ -49,7 +49,7 @@ namespace PersonalMovieListApi.Tests
             var retrievedMovies = GetObjectResult(result);
             bool allMoviesHaveSameOwner = true;
 
-            foreach(Movie movie in retrievedMovies)
+            foreach(var movie in retrievedMovies)
             {
                 if(movie.OwnerUsername != testUsernameFromToken)
                 {
@@ -271,10 +271,10 @@ namespace PersonalMovieListApi.Tests
             return auth.Token;
         }
 
-        private IEnumerable<Movie> GetObjectResult(ActionResult<IEnumerable<Movie>> result)
+        private IEnumerable<MovieModel> GetObjectResult(ActionResult<IEnumerable<MovieModel>> result)
         {
             if (result.Result != null)
-                return (IEnumerable<Movie>)((ObjectResult)result.Result).Value;
+                return (IEnumerable<MovieModel>)((ObjectResult)result.Result).Value;
             return result.Value;            
         }
     }

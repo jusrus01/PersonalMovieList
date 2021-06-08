@@ -36,8 +36,7 @@ namespace PersonalMovieListApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-                options.AddPolicy(policy, builder => 
+            services.AddCors(options => options.AddPolicy(policy, builder => 
                     builder.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod()));
@@ -66,6 +65,7 @@ namespace PersonalMovieListApi
             });
 
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<UsersDbContext>();
 
@@ -99,6 +99,7 @@ namespace PersonalMovieListApi
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
             services.AddScoped<IMoviesRepo, SqlMoviesRepo>();
 
             services.AddDbContext<MoviesDbContext>(options =>

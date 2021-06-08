@@ -28,7 +28,7 @@ namespace PersonalMovieListApi.Controllers
         
         //GET api/movies
         [HttpGet]
-        public ActionResult <IEnumerable<Movie>> GetAllMovies()
+        public ActionResult <IEnumerable<MovieModel>> GetAllMovies()
         {
             string username = RetrieveUsernameFromJwtAuthToken();
 
@@ -68,7 +68,7 @@ namespace PersonalMovieListApi.Controllers
                 return BadRequest("Bad params");
             }
 
-            Movie newMovie = _mapper.Map<Movie>(movieCreateDto);
+            MovieModel newMovie = _mapper.Map<MovieModel>(movieCreateDto);
             string username = RetrieveUsernameFromJwtAuthToken();
 
             if(username == null)
@@ -99,7 +99,7 @@ namespace PersonalMovieListApi.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateMovie(int id, MovieUpdateDto movieUpdateDto)
         {
-            Movie foundMovie = _repo.GetMovieById(id);
+            MovieModel foundMovie = _repo.GetMovieById(id);
             string username = RetrieveUsernameFromJwtAuthToken();
             
             if(username == null)
@@ -129,7 +129,7 @@ namespace PersonalMovieListApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteMovie(int id)
         {
-            Movie foundMovie = _repo.GetMovieById(id);
+            MovieModel foundMovie = _repo.GetMovieById(id);
             string username = RetrieveUsernameFromJwtAuthToken();
 
             if(username == null)

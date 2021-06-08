@@ -7,22 +7,23 @@ namespace PersonalMovieListApi.Tests
 {
     public class MockMoviesRepo : IMoviesRepo
     {
-        IEnumerable<Movie> mockMovies;
-        public void CreateMovie(Movie movie)
-        {
+        IEnumerable<MovieModel> mockMovies;
 
+        public void CreateMovie(MovieModel movie)
+        {
+            throw new System.NotImplementedException();
         }
 
-        public void DeleteMovie(Movie movie)
+        public void DeleteMovie(MovieModel movie)
         {
-            
+            throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Movie> GetAllMovies()
+        public IEnumerable<MovieModel> GetAllMovies()
         {
-            mockMovies = new List<Movie>
+            mockMovies = new List<MovieModel>
             {
-                new Movie
+                new MovieModel
                 {
                     Id = 0,
                     Title = "test1",
@@ -31,7 +32,7 @@ namespace PersonalMovieListApi.Tests
                     OwnerUsername = "test1"
                 },
 
-                new Movie
+                new MovieModel
                 {
                     Id = 1,
                     Title = "test2",
@@ -40,7 +41,7 @@ namespace PersonalMovieListApi.Tests
                     OwnerUsername = "test2"
                 },
 
-                new Movie
+                new MovieModel
                 {
                     Id = 2,
                     Title = "test3",
@@ -53,7 +54,7 @@ namespace PersonalMovieListApi.Tests
             return mockMovies;
         }
 
-        public IEnumerable<Movie> GetAllMoviesByUserName(string username)
+        public IEnumerable<MovieModel> GetAllMoviesByUserName(string username)
         {
             var movies = GetAllMovies();
             
@@ -61,12 +62,12 @@ namespace PersonalMovieListApi.Tests
                 .ToList();
         }
 
-        public Movie GetMovieById(int id)
+        public MovieModel GetMovieById(int id)
         {  
             mockMovies = GetAllMovies();
             try
             {
-                Movie movie = mockMovies.Where(movie => movie.Id == id)
+                var movie = mockMovies.Where(movie => movie.Id == id)
                     .FirstOrDefault();
 
                 return movie;
@@ -77,18 +78,14 @@ namespace PersonalMovieListApi.Tests
             }
         }
 
-        public Movie GetMovieByTitle(string title)
-        {
-            return null;
-        }
-
         public bool SaveChanges()
         {
             return true;
         }
 
-        public void UpdateMovie(Movie movie)
+        public void UpdateMovie(MovieModel movie)
         {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -15,17 +15,15 @@ namespace MvcMovie.Models
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new MoviesDbContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<MoviesDbContext>>()))
+                serviceProvider.GetRequiredService<DbContextOptions<MoviesDbContext>>()))
             {
-                // Look for any movies.
                 if (context.Movies.Any())
                 {
-                    return;   // DB has been seeded
+                    return;
                 }
 
                 context.Movies.AddRange(
-                    new Movie
+                    new MovieModel
                     {
                         Title = "When Harry Met Sally",
                         Rating = 1,
@@ -33,7 +31,7 @@ namespace MvcMovie.Models
                         OwnerUsername = "test"
                     },
 
-                    new Movie
+                    new MovieModel
                     {
                         Title = "Ghostbusters ",
                         Rating = 2,
@@ -41,7 +39,7 @@ namespace MvcMovie.Models
                         OwnerUsername = "test"
                     },
 
-                    new Movie
+                    new MovieModel
                     {
                         Title = "Ghostbusters 2",
                         Rating = 3,
@@ -49,7 +47,7 @@ namespace MvcMovie.Models
                         OwnerUsername = "test2"
                     },
 
-                    new Movie
+                    new MovieModel
                     {
                         Title = "Rio Bravo",
                         Rating = 4,
@@ -64,23 +62,24 @@ namespace MvcMovie.Models
         public static async Task InitializeUsers(UserManager<IdentityUser> userManager, 
             RoleManager<IdentityRole> roleManager)
         {
-            await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.Administrator.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.Moderator.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Authorization.Roles.User.ToString()));
+            if(userManager.Users.Any())
+            {
+                return;
+            }
+
+            var defaultRole = new IdentityRole("User");
+
+            await roleManager.CreateAsync(defaultRole);
             
-            //Seed Default User
-            var defaultUser = new IdentityUser 
-            {   UserName = Authorization.default_username, 
-                Email = Authorization.default_email, 
+            var defaultUser = new IdentityUser
+            {   UserName = "default",
+                Email = "default@default",
                 EmailConfirmed = true, 
                 PhoneNumberConfirmed = true 
             };
-            
-            if (userManager.Users.All(u => u.Id != defaultUser.Id))
-            {
-                await userManager.CreateAsync(defaultUser, Authorization.default_password);
-                await userManager.AddToRoleAsync(defaultUser, Authorization.default_role.ToString());
-            }
+
+            await userManager.CreateAsync(defaultUser, "default");
+            await userManager.AddToRoleAsync(defaultUser, defaultRole.ToString());
         }
     }
 }

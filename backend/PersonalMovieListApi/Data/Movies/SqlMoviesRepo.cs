@@ -14,7 +14,7 @@ namespace PersonalMovieListApi.Data
             _context = context;
         }
 
-        public void CreateMovie(Movie movie)
+        public void CreateMovie(MovieModel movie)
         {
             if(movie == null)
             {
@@ -24,7 +24,7 @@ namespace PersonalMovieListApi.Data
             _context.Movies.Add(movie);
         }
 
-        public void DeleteMovie(Movie movie) // should it reassign id's after deletion?
+        public void DeleteMovie(MovieModel movie)
         {
             if(movie == null)
             {
@@ -34,12 +34,12 @@ namespace PersonalMovieListApi.Data
             _context.Movies.Remove(movie);
         }
 
-        public IEnumerable<Movie> GetAllMoviesByUserName(string username)
+        public IEnumerable<MovieModel> GetAllMoviesByUserName(string username)
         {
             return _context.Movies.Where(movie => movie.OwnerUsername == username).ToList();
         }
 
-        public Movie GetMovieById(int id)
+        public MovieModel GetMovieById(int id)
         {
             return _context.Movies.FirstOrDefault(m => m.Id == id);
         }
@@ -49,7 +49,7 @@ namespace PersonalMovieListApi.Data
             return (_context.SaveChanges() >= 0);
         }
 
-        public void UpdateMovie(Movie movie)
+        public void UpdateMovie(MovieModel movie)
         {
             if(movie == null)
             {
