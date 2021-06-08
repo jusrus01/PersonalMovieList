@@ -11,12 +11,10 @@ namespace PersonalMovieListApi.Tests
 
         public void CreateMovie(MovieModel movie)
         {
-            throw new System.NotImplementedException();
         }
 
         public void DeleteMovie(MovieModel movie)
         {
-            throw new System.NotImplementedException();
         }
 
         public IEnumerable<MovieModel> GetAllMovies()
@@ -85,7 +83,6 @@ namespace PersonalMovieListApi.Tests
 
         public void UpdateMovie(MovieModel movie)
         {
-            throw new System.NotImplementedException();
         }
     }
 }
