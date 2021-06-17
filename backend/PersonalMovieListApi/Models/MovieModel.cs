@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PersonalMovieListApi.Models
 {
-    public class Movie 
+    public class MovieModel 
     {
         [Key]
         public int Id { get; set; }
@@ -11,5 +11,7 @@ namespace PersonalMovieListApi.Models
         public string Comment { get; set; }
         [Required]
         public int Rating { get; set; }
+        [Required]
+        public string OwnerUsername { get; set; }
     }
 }

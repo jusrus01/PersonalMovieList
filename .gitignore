@@ -1,3 +1,7 @@
 backend/PersonalMovieListApi/bin
 backend/PersonalMovieListApi/obj
+backend/PersonalMovieListApiTests/obj/*
+backend/PersonalMovieListApiTests/obj
+backend/PersonalMovieListApiTests/bin
+backend/PersonalMovieListApiTests/bin/*
 backend/PersonalMovieListApi/obj/*

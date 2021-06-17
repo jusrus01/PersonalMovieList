@@ -13,6 +13,6 @@ namespace PersonalMovieListApi.Data
             
         }
 
-        public DbSet<Movie> Movies { get; set; }
+        public DbSet<MovieModel> Movies { get; set; }
     }
 }

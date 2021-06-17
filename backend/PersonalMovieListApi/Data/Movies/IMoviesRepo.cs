@@ -6,11 +6,10 @@ namespace PersonalMovieListApi.Data
     public interface IMoviesRepo
     {
         bool SaveChanges();
-        IEnumerable<Movie> GetAllMovies();
-        Movie GetMovieById(int id);
-        Movie GetMovieByTitle(string title);
-        void CreateMovie(Movie movie);
-        void DeleteMovie(Movie movie);
-        void UpdateMovie(Movie movie);
+        IEnumerable<MovieModel> GetAllMoviesByUserName(string username);
+        MovieModel GetMovieById(int id);
+        void CreateMovie(MovieModel movie);
+        void DeleteMovie(MovieModel movie);
+        void UpdateMovie(MovieModel movie);
     }
 }
