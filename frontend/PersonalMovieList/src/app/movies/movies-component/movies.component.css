@@ -1,13 +1,13 @@
 .star {
     font-size: 1.5rem;
-    color: #b0c4de;
+    color: #505050;
   }
   .filled {
-    color: #1e90ff;
+    color: #F5F5F5;
   }
   .bad {
-    color: #deb0b0;
+    color: #505050;
   }
   .filled.bad {
-    color: #ff1e1e;
+    color: #C8C8C8;
   }

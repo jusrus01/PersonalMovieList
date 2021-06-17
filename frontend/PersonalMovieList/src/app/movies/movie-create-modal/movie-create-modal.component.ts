@@ -5,11 +5,11 @@ import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'movie-create-modal',
-  templateUrl: './movie-create-modal.component.html'
+  templateUrl: './movie-create-modal.component.html',
+  styleUrls: [ './movie-create-modal.component.css' ]
 })
 export class MovieCreateModalComponent {
   
-  closeResult = '';
   creationForm = this.formBuilder.group({
     title: ['', Validators.required],
     image: '',
@@ -23,26 +23,17 @@ export class MovieCreateModalComponent {
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+      }, (reason) => {
+      });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-  
   createMovie() : void {
     if(this.creationForm.valid) {
       var values = this.creationForm.value;
-      this.moviesService.createMovie(values.title, values.comment, values.rating);
+
+      this.moviesService.createMovie(values.title, values.comment, values.rating)
+        .subscribe(movie => this.moviesService.setCreatedMovie(movie));
+        
       this.creationForm.reset();
       this.modalService.dismissAll();
     }

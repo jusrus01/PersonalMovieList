@@ -1,0 +1,18 @@
+.modal-header, .modal-title, .modal-body {
+    background-color: #202020;
+}
+
+.dark-modal .modal-content {
+    background-color: #292b2c;
+    color: white;
+  }
+  .dark-modal .close {
+    color: white;
+  }
+  .light-blue-backdrop {
+    background-color: #5cb3fd;
+  }
+
+.form-control {
+    background-color: #E0E0E0;
+}

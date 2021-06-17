@@ -2,3 +2,8 @@
     position: absolute;
     visibility: hidden;
 }
+
+body {
+    background-color:#202020;
+    color: white;
+}
