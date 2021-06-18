@@ -27,6 +27,7 @@ namespace PersonalMovieListApi
     public class Startup
     {
         private readonly string policy = "CustomCorsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
