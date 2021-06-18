@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -12,6 +12,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MovieCreateModalComponent } from './movies/movie-create-modal/movie-create-modal.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedInGuard } from './guards/logged-in.guard';
+import { HttpClientInterceptor } from './interceptors/http.interceptor';
+import { AuthService } from './services/auth.service';
 
 export const routes: Routes = [
   { path: "login", component: LoginComponent, data: { title: 'Login'}, canActivate: [LoggedInGuard] },
@@ -39,7 +41,15 @@ export const routes: Routes = [
   ],
   providers: [
     Title,
-    AuthGuard
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: function(authService: AuthService, router: Router) {
+        return new HttpClientInterceptor(authService, router);
+      },
+      multi: true,
+      deps: [AuthService, Router]
+    }
   ],
   bootstrap: [AppComponent]
 })

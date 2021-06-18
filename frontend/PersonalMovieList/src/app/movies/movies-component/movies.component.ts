@@ -13,8 +13,7 @@ export class MoviesComponent implements OnInit {
   movies: Movie[];
   selectedMovie? : Movie;
 
-  constructor(private moviesService: MoviesService) {
-  }
+  constructor(private moviesService: MoviesService) { }
 
   ngOnInit(): void {
     this.moviesService.fetchMoviesFromApi()
@@ -23,14 +22,12 @@ export class MoviesComponent implements OnInit {
 
   ngDoCheck() {
     if(this.moviesService.createdMovie != null) {
-
       this.movies.push(this.moviesService.createdMovie);
       this.moviesService.createdMovie = null;
     }
   }
 
   updateMovie(movie: Movie) : void {
-    
     this.selectMovie(movie);
     this.moviesService.updateMovie(movie);
   }
@@ -40,8 +37,7 @@ export class MoviesComponent implements OnInit {
     if(index > -1) {
       this.movies.splice(index, 1);
     }
-    this.moviesService.removeMovie(movie)
-      .subscribe(m => m);
+    this.moviesService.removeMovie(movie).subscribe(m => m);
   }
 
   selectMovie(movie: Movie) : void{
@@ -53,4 +49,5 @@ export class MoviesComponent implements OnInit {
     }
   }
 
+  
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 // might need to not let user access other pages
 // after successful login
@@ -9,19 +10,11 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private jwtToken: string;
+  constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient) {
-
-    this.jwtToken = '';
-  }
-
-  createAccount(values) : void {
-
-    this.http.post("http://localhost:5000/api/users/register", { 
-      Username: values.username, Email: values.email, Password: values.password })
-        .subscribe();
-    console.log("values have been sent");
+  createAccount(values) : Observable<any> {
+    return this.http.post("http://localhost:5000/api/users/register", { 
+      Username: values.username, Email: values.email, Password: values.password });
   }
 
   login(values) : Observable<any> {
@@ -33,23 +26,15 @@ export class AuthService {
       Username: values.username, Email: values.email, Password: values.password });
   }
 
-  setToken(token: string) : void {
-    this.jwtToken = token;
-    console.log("Received token ", token);
-  }
-
   logOut() : void {
-
     localStorage.removeItem('token');
   }
 
   isLoggedIn() : boolean {
-    
-    if(localStorage.getItem('token') == null) {
-
+    if(localStorage.getItem('token') == null ||
+        localStorage.getItem('token') == 'null') {
       return false;
     }
-
     return true;
   }
 
@@ -58,8 +43,6 @@ export class AuthService {
   }
 
   setSession(token: string) : void {
-
     localStorage.setItem('token', token);
-    console.log("Set token: ", token);
   }
 }

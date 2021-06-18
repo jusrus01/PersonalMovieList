@@ -3,6 +3,7 @@ import { waitForAsync } from '@angular/core/testing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -18,6 +19,8 @@ export class RegisterComponent implements OnInit {
     password: ['', Validators.required]
   });
 
+  errorMessage? : string;
+
   constructor(private formBuilder: FormBuilder,
       private titleService: Title,
       private authService: AuthService,
@@ -28,14 +31,18 @@ export class RegisterComponent implements OnInit {
   }
 
   createAccount() : void {
-
     if(this.creationForm.valid) {
-
       var values = this.creationForm.value;
-      console.log(values);
-      this.authService.createAccount(values);
+      this.authService.createAccount(values).pipe(catchError(null)).subscribe(() => {
+          this.router.navigate(['/login']);
+          });
+      
+      this.errorMessage = "Email: " + values.email +
+          " or username: " + values.username + " is already registered";
+      
       this.creationForm.reset();
-      this.router.navigate(['/login']);
+    } else {
+      this.errorMessage = "Please fill in all fields"
     }
   }
 }

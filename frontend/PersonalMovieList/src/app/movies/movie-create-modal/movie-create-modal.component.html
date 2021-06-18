@@ -1,7 +1,7 @@
 <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add new movie!</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -24,6 +24,7 @@
           <div data-test="create-image" class="form-group">
             <label for="image">Image</label>
             <input formControlName="image" class="form-control" type="text">
+            <input type="file" class="file-upload" onchange="console.log(event.target.files)">
           </div>
 
           <div  data-test="create-rating">
@@ -31,19 +32,19 @@
           </div>
 
           <div class="btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" formControlName="rating">
-            <label ngbButtonLabel class="badge badge-pill badge-primary">
+            <label ngbButtonLabel class="badge badge-pill badge-success">
               <input ngbButton type="radio" [value]="1"> 1
             </label>
-            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+            <label ngbButtonLabel class="badge badge-pill badge-success ml-1">
               <input ngbButton type="radio" [value]="2"> 2
             </label>
-            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+            <label ngbButtonLabel class="badge badge-pill badge-success ml-1">
               <input ngbButton type="radio" [value]="3"> 3
             </label>
-            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+            <label ngbButtonLabel class="badge badge-pill badge-success ml-1">
               <input ngbButton type="radio" [value]="4"> 4
             </label>
-            <label ngbButtonLabel class="badge badge-pill badge-primary ml-1">
+            <label ngbButtonLabel class="badge badge-pill badge-success ml-1">
               <input ngbButton type="radio" [value]="5"> 5
             </label>
           </div>
@@ -61,11 +62,10 @@
           
         </div>
         <div class="modal-footer">
-          <button data-test="create-button" type="submit" class="btn btn-outline-dark">Create</button>
+          <button data-test="create-button" type="submit" class="btn btn-outline-success">Create</button>
         </div>
       </form>
     </div>
    
   </ng-template>
-  
-  <button class="btn btn-lg btn-outline-primary ml-auto" (click)="open(content)">Add</button>
+  <button class="btn btn-lg btn-outline-success ml-auto" (click)="open(content)">Add</button>
