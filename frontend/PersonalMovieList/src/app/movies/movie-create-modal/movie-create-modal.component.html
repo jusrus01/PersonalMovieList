@@ -24,6 +24,7 @@
           <div data-test="create-image" class="form-group">
             <label for="image">Image</label>
             <input formControlName="image" class="form-control" type="text">
+            <input type="file" class="file-upload" onchange="console.log(event.target.files)">
           </div>
 
           <div  data-test="create-rating">

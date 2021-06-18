@@ -6,6 +6,7 @@ import { Movie } from '../movies/movie';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { waitForAsync } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class MoviesService {
   movies: Movie[];
   createdMovie : Movie;
 
-  constructor(private http: HttpClient, private authService: AuthService) { 
+  constructor(private http: HttpClient, private authService: AuthService,
+      private router: Router) { 
     this.createdMovie = null;
   }
 
@@ -69,6 +71,6 @@ export class MoviesService {
 
     this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment },
     { headers: { "Authorization" : "Bearer " + this.authService.getToken()}, withCredentials: false })
-      .subscribe(s => s);
+      .subscribe();
   }
 }
