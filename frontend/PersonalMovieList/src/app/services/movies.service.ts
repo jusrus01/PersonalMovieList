@@ -22,8 +22,7 @@ export class MoviesService {
   }
 
   fetchMoviesFromApi() : Observable<Movie[]> {
-    return this.http.get<Movie[]>("http://localhost:5000/api/movies",
-      { headers: { "Authorization" : "Bearer " + this.authService.getToken() }, withCredentials: false })
+    return this.http.get<Movie[]>("http://localhost:5000/api/movies")
       .pipe(map((data: any[]) => data.map((item: Movie) =>
           new Movie(
             item.id,
@@ -44,8 +43,7 @@ export class MoviesService {
     //   { headers: { "Authorization" : "Bearer " + this.authService.getToken() }, withCredentials: false  })
     //   .subscribe();
 
-    return this.http.post("http://localhost:5000/api/movies", { Title: title, Rating: rating, Comment: comment },
-      { headers: { "Authorization" : "Bearer " + this.authService.getToken() }, withCredentials: false  })
+    return this.http.post("http://localhost:5000/api/movies", { Title: title, Rating: rating, Comment: comment })
       .pipe(map((item: Movie) =>
           new Movie(
             item.id,
@@ -61,7 +59,7 @@ export class MoviesService {
 
   removeMovie(movie: Movie) : Observable<any> {
     return this.http.delete("http://localhost:5000/api/movies/" + movie.id,
-      { headers: { "Authorization" : "Bearer " + this.authService.getToken() }, withCredentials: false });
+      );
   }
 
   updateMovie(movie: Movie) : void {
@@ -69,8 +67,7 @@ export class MoviesService {
     const rating = movie.rating;
     const comment = movie.comment;
 
-    this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment },
-    { headers: { "Authorization" : "Bearer " + this.authService.getToken()}, withCredentials: false })
+    this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment })
       .subscribe();
   }
 }

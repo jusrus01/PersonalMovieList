@@ -28,7 +28,15 @@ export class HttpClientInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const authReq = request.clone();
-    return next.handle(request).pipe(catchError(err => this.handleAuthError(err)));
+    var authReq;
+    if(this.authService.isLoggedIn()) {
+      authReq = request.clone({
+        headers: request.headers.set("Authorization", "Bearer " + this.authService.getToken()),
+        withCredentials: false
+      });
+    } else {
+      authReq = request.clone();
+    }
+    return next.handle(authReq).pipe(catchError(err => this.handleAuthError(err)));
   }
 }
