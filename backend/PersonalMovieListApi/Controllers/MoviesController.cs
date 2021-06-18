@@ -42,7 +42,7 @@ namespace PersonalMovieListApi.Controllers
 
         //GET api/movies/{id}
         [HttpGet("{id}", Name="GetMovieById")]
-        private ActionResult <MovieReadDto> GetMovieById(int id)
+        public ActionResult <MovieReadDto> GetMovieById(int id)
         {
             var movie = _repo.GetMovieById(id);
             var user = RetrieveUsernameFromJwtAuthToken();

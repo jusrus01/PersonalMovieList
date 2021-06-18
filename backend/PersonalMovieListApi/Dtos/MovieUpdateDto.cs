@@ -8,7 +8,6 @@ namespace PersonalMovieListApi.Dtos
         [MaxLength(250)]
         public string Title { get; set; }
 
-        [Required]
         [MaxLength(250)]
         public string Comment { get; set; }
 

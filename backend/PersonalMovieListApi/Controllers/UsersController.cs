@@ -27,7 +27,13 @@ namespace PersonalMovieListApi.Controllers
             try
             {
                 var result = await _userService.RegisterAsync(model);
-                return Ok(result);
+
+                if(result.AccountCreated)
+                {
+                    return Ok(result);
+                }
+
+                return Conflict(result);
             }
             catch(ArgumentNullException)
             {

@@ -71,6 +71,7 @@ namespace PersonalMovieListApi.Data.Users
             authenticationModel.Message = $"Incorrect Credentials for user {user.Email}.";
             return authenticationModel;
         }
+        
         private async Task<JwtSecurityToken> CreateJwtToken(IdentityUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
@@ -105,7 +106,7 @@ namespace PersonalMovieListApi.Data.Users
             return jwtSecurityToken;
         }
 
-        public async Task<string> RegisterAsync(RegisterModel model)
+        public async Task<RegisterStateModel> RegisterAsync(RegisterModel model)
         {
             if(model == null)
             {
@@ -130,11 +131,19 @@ namespace PersonalMovieListApi.Data.Users
                     await _userManager.AddToRoleAsync(user, "User");                 
                 }
 
-                return $"User Registered with username {user.UserName}";
+                return new RegisterStateModel
+                {
+                    AccountCreated = true,
+                    Message = $"User Registered with username {user.UserName}"
+                };
             }
             else
             {
-                return $"Email {user.Email} or username {user.UserName} already registered.";
+                return new RegisterStateModel
+                {
+                    AccountCreated = false,
+                    Message = $"Email {user.Email} or username {user.UserName} already registered."
+                };
             }
         }
     }
