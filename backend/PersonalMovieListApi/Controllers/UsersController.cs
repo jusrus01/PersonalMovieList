@@ -33,7 +33,7 @@ namespace PersonalMovieListApi.Controllers
                     return Ok(result);
                 }
 
-                return BadRequest(result);
+                return Conflict(result);
             }
             catch(ArgumentNullException)
             {
