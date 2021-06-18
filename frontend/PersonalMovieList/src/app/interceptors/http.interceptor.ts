@@ -23,6 +23,8 @@ export class HttpClientInterceptor implements HttpInterceptor {
       this.authService.logOut();
       this.router.navigate(['/login']);
       return of(err.message);
+    } else if(err.status == 409) {
+      return of(err.message);
     }
     return throwError(err);
   }

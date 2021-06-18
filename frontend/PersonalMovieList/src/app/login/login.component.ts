@@ -26,18 +26,26 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
+  errorMessage? : string;
+
   login() : void {
 
     if(this.creationForm.valid) {
-      
       var values = this.creationForm.value;
-      console.log(values);
+
       this.authService.login(values)
-        .subscribe((data : any) => { 
-          this.authService.setSession(data.token);
+        .subscribe((data : any) => {
+          if(data.isAuthenticated) { 
+            this.authService.setSession(data.token);
+            this.router.navigate(['/']);
+          } else {
+            // display error message
+            this.errorMessage = data.message;
+          }
           this.creationForm.reset();
-          this.router.navigate(['/']);
         });
+    } else {
+      this.errorMessage = "Invalid email or password";
     }
   }
 }

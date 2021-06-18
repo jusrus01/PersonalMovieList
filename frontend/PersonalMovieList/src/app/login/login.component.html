@@ -6,6 +6,7 @@
                     <span class="fa fa-user-o"></span>
                 </div>
                 <h3 class="text-center text-white mb-4">Have an account?</h3>
+                <p class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</p>
                 <form [formGroup]="creationForm" (ngSubmit)="login()" action="post">
                     <div class="form-group">
                         <input formControlName="email" type="text" class="form-control rounded-left" placeholder="Email" required>
