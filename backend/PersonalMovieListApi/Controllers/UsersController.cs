@@ -7,6 +7,7 @@ using PersonalMovieListApi.Data;
 using PersonalMovieListApi.Data.Users;
 using PersonalMovieListApi.Dtos;
 using PersonalMovieListApi.Models;
+using System.Linq;
 
 namespace PersonalMovieListApi.Controllers
 {
@@ -26,6 +27,11 @@ namespace PersonalMovieListApi.Controllers
         {
             try
             {
+                if(model.Email.Where(c => c == '@').Count() != 1)
+                {
+                    return BadRequest();
+                }
+
                 var result = await _userService.RegisterAsync(model);
 
                 if(result.AccountCreated)

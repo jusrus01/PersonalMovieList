@@ -123,7 +123,7 @@ namespace PersonalMovieListApi.Data.Users
             var userWithSameUsername = await _userManager.FindByNameAsync(model.Username);
 
             if (userWithSameEmail == null && userWithSameUsername == null)
-            {
+            {   
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
