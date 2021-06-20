@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FileExtensionInfo } from 'typescript';
 import { MoviesService } from '../../services/movies.service';
 
 @Component({
@@ -10,11 +11,12 @@ import { MoviesService } from '../../services/movies.service';
 })
 export class MovieCreateModalComponent {
   
+  selectedImage? : string;
+
   creationForm = this.formBuilder.group({
     title: ['', Validators.required],
-    image: '',
     comment: '',
-    rating: ['', Validators.required]
+    rating: ['', Validators.required],
   });
 
   constructor(private modalService: NgbModal,
@@ -29,13 +31,30 @@ export class MovieCreateModalComponent {
 
   createMovie() : void {
     if(this.creationForm.valid) {
-      var values = this.creationForm.value;
+      const values = this.creationForm.value;
+      const imageWithoutPrefix = this.selectedImage.split(',', 2)[1];
 
-      this.moviesService.createMovie(values.title, values.comment, values.rating)
+      this.moviesService.createMovie(values.title, values.comment, values.rating, imageWithoutPrefix)
         .subscribe(movie => this.moviesService.setCreatedMovie(movie));
         
       this.creationForm.reset();
       this.modalService.dismissAll();
+    }
+  }
+
+  handleReaderLoaded(event) {
+    const reader = event.target;
+    this.selectedImage = reader.result;
+  }
+  
+  onImageSelected(event) : void {
+    const selectedImage = event.target.files[0];
+
+    if(selectedImage) {
+
+      const reader = new FileReader();
+      reader.onload = this.handleReaderLoaded.bind(this);
+      reader.readAsDataURL(selectedImage);
     }
   }
 }

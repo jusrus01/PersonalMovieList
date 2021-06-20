@@ -29,13 +29,21 @@
           </ngb-rating>
         
         </div>
-        <img data-test="movie-image" class="mb-1" alt="image">
+
+        <img [src]="getImageContent(movie)" data-test="movie-image" class="mb-1 movie-image" alt="Image not found.">
+
+        <div *ngIf="selectedMovie == movie" class="form-group">
+          <label for="image">Select new image</label>
+          <br>
+          <input type="file" accept="image/*" class="file-upload" (change)="onImageSelected($event)" #fileUpload>
+        </div>
+
         <br>
         <small data-test="movie-comment" class="text-white" *ngIf="selectedMovie != movie">{{movie.comment}}</small>
         <input class="form-control w-50" *ngIf="selectedMovie === movie" [(ngModel)]="movie.comment" value="{{movie.comment}}">
         <div class="ml-auto float-right">
           <button data-test="movie-edit" *ngIf="selectedMovie != movie" data-test="movie-remove" class="btn btn-outline-success ml-auto" (click)="selectMovie(movie)">Edit</button>
-          <button data-test="movie-edit" type="submit" *ngIf="selectedMovie === movie" data-test="movie-remove" class="btn btn-outline-success ml-auto active" (click)="updateMovie(movie)">Save</button>
+          <button data-test="movie-edit" type="submit" *ngIf="selectedMovie === movie" data-test="movie-remove" class="btn btn-outline-success ml-auto active" (click)="updateMovie(selectedMovie)">Save</button>
           <button data-test="movie-remove" class="btn btn-outline-danger ml-3" (click)="removeMovie(movie)">Remove</button>
         </div>
       </a>

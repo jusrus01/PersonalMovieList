@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MoviesService } from '../../services/movies.service';
 import { Movie } from '..//movie';
 
@@ -13,11 +14,14 @@ export class MoviesComponent implements OnInit {
   movies: Movie[];
   selectedMovie? : Movie;
 
-  constructor(private moviesService: MoviesService) { }
+  constructor(private moviesService: MoviesService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.moviesService.fetchMoviesFromApi()
-      .subscribe(movies => this.movies = movies);
+      .subscribe(movies => { 
+        this.movies = movies;
+      });
   }
 
   ngDoCheck() {
@@ -27,9 +31,14 @@ export class MoviesComponent implements OnInit {
     }
   }
 
+  getImageContent(movie: Movie) {
+    // return this.sanitizer.bypassSecurityTrustUrl(movie.image);
+    return this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64, ' + movie.image);
+  }
+
   updateMovie(movie: Movie) : void {
-    this.selectMovie(movie);
     this.moviesService.updateMovie(movie);
+    this.selectMovie(movie);
   }
 
   removeMovie(movie: Movie) : void {
@@ -46,6 +55,24 @@ export class MoviesComponent implements OnInit {
       this.selectedMovie = null;
     } else {
       this.selectedMovie = movie;
+    }
+  }
+
+  handleReaderLoaded(event) {
+    const reader = event.target;
+    console.log("BEFORE ", this.selectedMovie.image);
+    this.selectedMovie.image = reader.result.split(',', 2)[1];
+    console.log("AFTER ", this.selectedMovie.image);
+  }
+  
+  onImageSelected(event) : void {
+    const selectedImage = event.target.files[0];
+
+    if(selectedImage) {
+
+      const reader = new FileReader();
+      reader.onload = this.handleReaderLoaded.bind(this);
+      reader.readAsDataURL(selectedImage);
     }
   }
 
