@@ -1,21 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using PersonalMovieListApi.Data;
-using AutoMapper;
 using PersonalMovieListApi.Settings;
-using PersonalMovieListApi.Models;
 using Microsoft.AspNetCore.Identity;
 using PersonalMovieListApi.Data.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,6 +35,7 @@ namespace PersonalMovieListApi
 
 
             // settings used for demo purposes
+            // configuring Identity options
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -65,16 +57,19 @@ namespace PersonalMovieListApi
                 options.User.RequireUniqueEmail = true;
             });
 
+            // retrieving Jwt parameters from appsettings.json
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
-
+            // adding users and roles
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<UsersDbContext>();
 
+            // registering IUserService implementation
             services.AddScoped<IUserService, UserService>();
-
+            // adding database with user data
             services.AddDbContext<UsersDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UsersConnection")));
 
+            // adding and configuring jwt bearer
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -98,11 +93,11 @@ namespace PersonalMovieListApi
                 });
 
             services.AddControllers();
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
+            // registering IMoviesRepo implementation
             services.AddScoped<IMoviesRepo, SqlMoviesRepo>();
-
+            // connecting to database with movies
             services.AddDbContext<MoviesDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -114,7 +109,7 @@ namespace PersonalMovieListApi
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection(); // CORS
+            //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

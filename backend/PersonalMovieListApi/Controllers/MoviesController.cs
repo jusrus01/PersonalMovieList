@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using PersonalMovieListApi.Data;
-using PersonalMovieListApi.Data.Users;
 using PersonalMovieListApi.Dtos;
 using PersonalMovieListApi.Models;
 

@@ -5,10 +5,10 @@ namespace PersonalMovieListApi.Dtos
     public class MovieUpdateDto
     {
         [Required]
-        [MaxLength(250)]
+        [MaxLength(50)]
         public string Title { get; set; }
 
-        [MaxLength(250)]
+        [MaxLength(1000)]
         public string Comment { get; set; }
 
         [Required]
