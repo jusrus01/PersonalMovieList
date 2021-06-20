@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PersonalMovieListApi.Attributes
 {
-    public class LengthAttribute : ValidationAttribute
+    public class MaxLengthAttribute : ValidationAttribute
     {
         private readonly int len;
-        public LengthAttribute(int len)
+        public MaxLengthAttribute(int len)
         {
             this.len = len;            
         }
@@ -18,7 +18,7 @@ namespace PersonalMovieListApi.Attributes
                 return false;
             }
             
-            return ((ICollection)value).Count == len;
+            return ((ICollection)value).Count <= len;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace PersonalMovieListApi.Controllers
         
         //GET api/movies
         [HttpGet]
-        public ActionResult <IEnumerable<MovieModel>> GetAllMovies()
+        public ActionResult <IEnumerable<MovieReadDto>> GetAllMovies()
         {
             string username = RetrieveUsernameFromJwtAuthToken();
 
@@ -54,8 +54,10 @@ namespace PersonalMovieListApi.Controllers
 
             if(movie != null)
             {
-                return Ok(_mapper.Map<MovieReadDto>(movie));
+                MovieReadDto readMovie = _mapper.Map<MovieReadDto>(movie);
+                return Ok(readMovie);
             }
+
             return NotFound();
         }
 
@@ -77,6 +79,24 @@ namespace PersonalMovieListApi.Controllers
             }
 
             newMovie.OwnerUsername = username;
+            
+            try
+            {
+                newMovie.Image = Convert.FromBase64String(movieCreateDto.ImageBase64);
+            }
+            catch(FormatException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch(ArgumentNullException)
+            {
+                newMovie.Image = null;
+            }
+
+            if(!TryValidateModel(newMovie, nameof(MovieModel)))
+            {
+                return BadRequest("Image length greater than 256kb");
+            }
 
             try
             {
