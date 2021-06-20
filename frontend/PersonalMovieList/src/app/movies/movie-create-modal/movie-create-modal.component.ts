@@ -21,7 +21,11 @@ export class MovieCreateModalComponent {
 
   constructor(private modalService: NgbModal,
     private moviesService: MoviesService,
-    private formBuilder: FormBuilder) {}
+    private formBuilder: FormBuilder) { }
+
+  ngOnInit() {
+    this.selectedImage = null;
+  }
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -32,7 +36,13 @@ export class MovieCreateModalComponent {
   createMovie() : void {
     if(this.creationForm.valid) {
       const values = this.creationForm.value;
-      const imageWithoutPrefix = this.selectedImage.split(',', 2)[1];
+
+      var imageWithoutPrefix : string;
+      if(this.selectedImage == null) {
+        imageWithoutPrefix = '';
+      } else {
+        imageWithoutPrefix = this.selectedImage.split(',', 2)[1];
+      }
 
       this.moviesService.createMovie(values.title, values.comment, values.rating, imageWithoutPrefix)
         .subscribe(movie => this.moviesService.setCreatedMovie(movie));

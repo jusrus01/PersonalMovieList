@@ -21,6 +21,7 @@ export class MoviesComponent implements OnInit {
     this.moviesService.fetchMoviesFromApi()
       .subscribe(movies => { 
         this.movies = movies;
+        this.sortMovies('A-Z');
       });
   }
 
@@ -76,5 +77,45 @@ export class MoviesComponent implements OnInit {
     }
   }
 
-  
+  sortMovies(key: string) : void {
+    if(this.movies != null)
+    {
+      switch(key) {
+        case 'low':
+          this.movies.sort((n1, n2) => {
+            if(n1.rating > n2.rating) {
+              return 1;
+            } else if(n1.rating == n2.rating) {
+              return n1.title.localeCompare(n2.title);
+            }
+            else if(n1.rating < n2.rating) {
+              return -1;
+            }
+          })
+          break;
+
+        case 'high':
+          this.movies.sort((n1, n2) => {
+            if(n1.rating < n2.rating) {
+              return 1;
+            } else if(n1.rating == n2.rating) {
+              return n1.title.localeCompare(n2.title);
+            }
+            else if(n1.rating > n2.rating) {
+              return -1;
+            }
+          })
+          break;
+
+        case 'Z-A':
+          this.movies.sort((n1, n2) => -n1.title.localeCompare(n2.title));
+          break;
+
+        case 'A-Z':
+        default:
+          this.movies.sort((n1, n2) => n1.title.localeCompare(n2.title));
+          break;
+      }
+    }
+  }
 }
