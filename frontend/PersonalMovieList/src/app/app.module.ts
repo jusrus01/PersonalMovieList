@@ -1,4 +1,4 @@
-import { Injector, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -16,9 +16,9 @@ import { HttpClientInterceptor } from './interceptors/http.interceptor';
 import { AuthService } from './services/auth.service';
 
 export const routes: Routes = [
-  { path: "login", component: LoginComponent, data: { title: 'Login'}, canActivate: [LoggedInGuard] },
-  { path: "register", component: RegisterComponent, data: { title: 'Register'}, canActivate: [LoggedInGuard]},
-  { path: '', component: HomeComponent, data: { title: 'Home'}, canActivate: [AuthGuard] },
+  { path: "login", component: LoginComponent, data: { title: 'Login' }, canActivate: [LoggedInGuard] },
+  { path: "register", component: RegisterComponent, data: { title: 'Register' }, canActivate: [LoggedInGuard] },
+  { path: '', component: HomeComponent, data: { title: 'Home' }, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ]
 
