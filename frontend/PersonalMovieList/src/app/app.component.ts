@@ -6,8 +6,7 @@ import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
 
@@ -24,12 +23,10 @@ export class AppComponent {
   }
 
   isLoggedIn() : boolean {
-
     return this.authService.isLoggedIn();
   }
 
   logOut() : void {
-
     this.authService.logOut();
     this.router.navigate(['/login']);
   }

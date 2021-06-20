@@ -9,13 +9,13 @@
                 <p class="alert alert-danger w-75 mx-auto" *ngIf="errorMessage">{{ errorMessage }}</p>
                 <form [formGroup]="creationForm" (ngSubmit)="createAccount()" action="post">
                     <div class="form-group">
-                        <input formControlName="username" type="text" class="mx-auto form-control rounded-left w-75" placeholder="Username" required>
+                        <input maxlength="25" formControlName="username" type="text" class="mx-auto form-control rounded-left w-75" placeholder="Username" required>
                     </div>
                     <div class="form-group">
-                        <input formControlName="email" type="text" class="mx-auto form-control rounded-left w-75" placeholder="Email" required>
+                        <input maxlength="25" formControlName="email" type="email" class="mx-auto form-control rounded-left w-75" placeholder="Email" required>
                     </div>
                     <div class="form-group d-flex">
-                        <input formControlName="password" type="password" class="mx-auto form-control rounded-left w-75" placeholder="Password" required>
+                        <input maxlength="25" formControlName="password" type="password" class="mx-auto form-control rounded-left w-75" placeholder="Password" required>
                     </div>
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-outline-success rounded submit p-2 px-4">Register</button>

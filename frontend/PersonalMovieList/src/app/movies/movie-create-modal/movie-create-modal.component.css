@@ -16,3 +16,11 @@
 .form-control {
     background-color: #E0E0E0;
 }
+
+.close {
+  color: azure;
+}
+
+.modal-dialog {
+  background-color: black;
+}

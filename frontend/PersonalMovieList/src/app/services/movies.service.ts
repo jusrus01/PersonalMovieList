@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Movie } from '../movies/movie';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-import { waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -13,8 +11,8 @@ import { Router } from '@angular/router';
 })
 export class MoviesService {
 
-  movies: Movie[];
-  createdMovie : Movie;
+  private movies: Movie[];
+  public createdMovie : Movie;
 
   constructor(private http: HttpClient, private authService: AuthService,
       private router: Router) { 
@@ -38,11 +36,7 @@ export class MoviesService {
     if(rating <= 0 || rating > 5) {
       rating = 1;
     }
-    // this.createdMovie = new Movie(this.movies.length + 1, title, comment, rating);
 
-    // this.http.post("http://localhost:5000/api/movies", { title, rating, comment },
-    //   { headers: { "Authorization" : "Bearer " + this.authService.getToken() }, withCredentials: false  })
-    //   .subscribe();
     return this.http.post("http://localhost:5000/api/movies", { Title: title, Rating: rating, Comment: comment, ImageBase64 : image })
       .pipe(map((item: Movie) =>
           new Movie(
@@ -59,8 +53,7 @@ export class MoviesService {
   }
 
   removeMovie(movie: Movie) : Observable<any> {
-    return this.http.delete("http://localhost:5000/api/movies/" + movie.id,
-      );
+    return this.http.delete("http://localhost:5000/api/movies/" + movie.id);
   }
 
   updateMovie(movie: Movie) : void {

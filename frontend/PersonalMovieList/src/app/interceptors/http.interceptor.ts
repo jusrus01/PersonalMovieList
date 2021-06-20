@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -18,8 +18,6 @@ export class HttpClientInterceptor implements HttpInterceptor {
 
   private handleAuthError(err: HttpErrorResponse) : Observable<any> {
     if(err.status == 401 || err.status == 403 || err.status == 0) {
-      //this.authService.logOut();
-      //this.router.navigate(['/login']);
       this.authService.logOut();
       this.router.navigate(['/login']);
       return of(err.message);

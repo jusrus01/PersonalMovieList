@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { FileExtensionInfo } from 'typescript';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MoviesService } from '../../services/movies.service';
 
 @Component({

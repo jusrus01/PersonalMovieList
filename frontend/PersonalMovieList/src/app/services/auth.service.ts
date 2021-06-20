@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
-// might need to not let user access other pages
-// after successful login
 @Injectable({
   providedIn: 'root'
 })
@@ -18,10 +15,6 @@ export class AuthService {
   }
 
   login(values) : Observable<any> {
-
-    // this.http.post("http://localhost:5000/api/users/login", { 
-    //   Username: values.username, Email: values.email, Password: values.password})
-    //     .subscribe((data : any) => this.setToken(data.token));
     return this.http.post("http://localhost:5000/api/users/login", { 
       Username: values.username, Email: values.email, Password: values.password });
   }

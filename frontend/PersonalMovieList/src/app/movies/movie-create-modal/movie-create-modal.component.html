@@ -10,13 +10,12 @@
         <div class="form-group">
 
           <div data-test="create-title" class="form-group">
-            <label for="movieTitle">Title</label>
-            <input formControlName="title" class="form-control my-0" name="title" type="text"
-              required maxlength="40">
+            <input maxlength="60" formControlName="title" class="form-control my-0" name="title" type="text"
+              required placeholder="Title">
           </div>
 
           <div *ngIf="creationForm.controls['title'].invalid">
-            <div *ngIf="creationForm.controls['title'].errors.required" class="alert alert-danger" role="alert">
+            <div *ngIf="creationForm.controls['title'].errors.required" class="alert-container alert alert-danger" role="alert">
               Title is required.
             </div>
           </div>
@@ -49,15 +48,14 @@
             </label>
           </div>
           <div *ngIf="creationForm.controls['rating'].invalid">
-            <div class="alert" *ngIf="creationForm.controls['rating'].errors.required" class="alert alert-danger" role="alert">
+            <div *ngIf="creationForm.controls['rating'].errors.required" class="alert-container alert alert-danger" role="alert">
               Rating is required.
             </div>
           </div>
 
           <div  data-test="create-comment" class="form-group">
-            <label for="movieTitle">Comment</label>
             <input formControlName="comment" class="form-control" type="text"
-               maxlength="100">
+               maxlength="100" placeholder="Comment">
           </div>
           
         </div>

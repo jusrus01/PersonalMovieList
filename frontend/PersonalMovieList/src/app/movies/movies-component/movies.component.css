@@ -13,6 +13,26 @@
   }
 
 .movie-image {
-  max-width: 200px;
+  max-width: 150px;
   max-height: 200px;
+}
+
+.down {
+  margin-top: 30px;
+}
+
+.text-holder {
+  word-wrap: break-word;
+  max-width: 600px;
+}
+
+textarea {
+  margin-top: 10px;
+  min-height: 180px;
+  min-width: 600px;
+  resize: none;
+}
+
+.title-text {
+  margin-bottom: 10px;
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { waitForAsync } from '@angular/core/testing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -8,8 +7,7 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
 
@@ -33,14 +31,14 @@ export class RegisterComponent implements OnInit {
   createAccount() : void {
     if(this.creationForm.valid) {
       var values = this.creationForm.value;
-      this.authService.createAccount(values).pipe(catchError(null)).subscribe(() => {
+      this.authService.createAccount(values).pipe(catchError(e => e)).subscribe(() => {
           this.router.navigate(['/login']);
           });
       
-      this.errorMessage = "Email: " + values.email +
-          " or username: " + values.username + " is already registered";
-      
-      this.creationForm.reset();
+        this.errorMessage = "Email '" + values.email +
+            "' or username '" + values.username + "' is already registered";
+
+        this.creationForm.reset();
     } else {
       this.errorMessage = "Please fill in all fields"
     }
