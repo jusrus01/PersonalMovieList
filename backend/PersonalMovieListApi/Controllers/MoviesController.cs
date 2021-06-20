@@ -124,7 +124,7 @@ namespace PersonalMovieListApi.Controllers
             
             if(username == null)
             {
-                return BadRequest("No authorization header found");
+                return BadRequest("No authorization header found"); 
             }
 
             if(foundMovie == null)
@@ -138,6 +138,18 @@ namespace PersonalMovieListApi.Controllers
             }
 
             _mapper.Map(movieUpdateDto, foundMovie);
+
+            if(movieUpdateDto.ImageBase64 != null)
+            {
+                try
+                {
+                    foundMovie.Image = Convert.FromBase64String(movieUpdateDto.ImageBase64);
+                }
+                catch
+                {
+                    // do nothing
+                }
+            }
 
             _repo.UpdateMovie(foundMovie);
             _repo.SaveChanges();
