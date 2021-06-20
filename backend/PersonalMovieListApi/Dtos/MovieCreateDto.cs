@@ -14,5 +14,6 @@ namespace PersonalMovieListApi.Dtos
         [Required]
         [Range(0, 5)]
         public int Rating { get; set; }
+        public string ImageBase64 { get; set; }
     }
 }

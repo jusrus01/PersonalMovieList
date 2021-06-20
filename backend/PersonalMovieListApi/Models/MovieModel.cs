@@ -13,5 +13,7 @@ namespace PersonalMovieListApi.Models
         public int Rating { get; set; }
         [Required]
         public string OwnerUsername { get; set; }
+        [MaxLength(256000)]
+        public byte[] Image { get; set; }
     }
 }

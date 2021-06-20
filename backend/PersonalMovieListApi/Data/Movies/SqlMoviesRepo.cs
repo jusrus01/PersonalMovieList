@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using PersonalMovieListApi.Models;
 using System.Linq;
 using System;
+using PersonalMovieListApi.Dtos;
 
 namespace PersonalMovieListApi.Data
 {
@@ -20,7 +21,6 @@ namespace PersonalMovieListApi.Data
             {
                 throw new ArgumentNullException();
             }
-
             _context.Movies.Add(movie);
         }
 
@@ -34,9 +34,18 @@ namespace PersonalMovieListApi.Data
             _context.Movies.Remove(movie);
         }
 
-        public IEnumerable<MovieModel> GetAllMoviesByUserName(string username)
+        public IEnumerable<MovieReadDto> GetAllMoviesByUserName(string username)
         {
-            return _context.Movies.Where(movie => movie.OwnerUsername == username).ToList();
+            return _context.Movies.Where(movie => movie.OwnerUsername == username)
+                .Select(movie => new MovieReadDto
+                    {
+                        Id = movie.Id,
+                        Title = movie.Title,
+                        Rating = movie.Rating,
+                        Comment = movie.Comment,
+                        Image = movie.Image
+                    })
+                .ToList();
         }
 
         public MovieModel GetMovieById(int id)
