@@ -37,8 +37,8 @@ export class MoviesComponent implements OnInit {
   }
 
   updateMovie(movie: Movie) : void {
-    this.selectMovie(movie);
     this.moviesService.updateMovie(movie);
+    this.selectMovie(movie);
   }
 
   removeMovie(movie: Movie) : void {
@@ -55,6 +55,24 @@ export class MoviesComponent implements OnInit {
       this.selectedMovie = null;
     } else {
       this.selectedMovie = movie;
+    }
+  }
+
+  handleReaderLoaded(event) {
+    const reader = event.target;
+    console.log("BEFORE ", this.selectedMovie.image);
+    this.selectedMovie.image = reader.result.split(',', 2)[1];
+    console.log("AFTER ", this.selectedMovie.image);
+  }
+  
+  onImageSelected(event) : void {
+    const selectedImage = event.target.files[0];
+
+    if(selectedImage) {
+
+      const reader = new FileReader();
+      reader.onload = this.handleReaderLoaded.bind(this);
+      reader.readAsDataURL(selectedImage);
     }
   }
 

@@ -67,8 +67,9 @@ export class MoviesService {
     const title = movie.title;
     const rating = movie.rating;
     const comment = movie.comment;
+    const imageBase64 = movie.image;
 
-    this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment })
+    this.http.put("http://localhost:5000/api/movies/" + movie.id, { title, rating, comment, imageBase64 })
       .subscribe();
   }
 }
