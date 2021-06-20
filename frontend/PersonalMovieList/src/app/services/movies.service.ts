@@ -23,17 +23,18 @@ export class MoviesService {
 
   fetchMoviesFromApi() : Observable<Movie[]> {
     return this.http.get<Movie[]>("http://localhost:5000/api/movies")
-      .pipe(map((data: any[]) => data.map((item: Movie) =>
-          new Movie(
+      .pipe(map((data: any[]) => data.map((item: Movie) => {
+          return new Movie(
             item.id,
             item.title,
             item.comment,
-            item.rating
-          )))
+            item.rating,
+            item.image
+          )}))
       );
   }
 
-  createMovie(title: string, comment: string, rating: number) : Observable<Movie> {
+  createMovie(title: string, comment: string, rating: number, image) : Observable<Movie> {
     if(rating <= 0 || rating > 5) {
       rating = 1;
     }
@@ -42,14 +43,14 @@ export class MoviesService {
     // this.http.post("http://localhost:5000/api/movies", { title, rating, comment },
     //   { headers: { "Authorization" : "Bearer " + this.authService.getToken() }, withCredentials: false  })
     //   .subscribe();
-
-    return this.http.post("http://localhost:5000/api/movies", { Title: title, Rating: rating, Comment: comment })
+    return this.http.post("http://localhost:5000/api/movies", { Title: title, Rating: rating, Comment: comment, ImageBase64 : image })
       .pipe(map((item: Movie) =>
           new Movie(
             item.id,
             item.title,
             item.comment,
-            item.rating
+            item.rating,
+            item.image
           )));
   }
 

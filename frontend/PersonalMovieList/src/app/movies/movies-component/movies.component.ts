@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MoviesService } from '../../services/movies.service';
 import { Movie } from '..//movie';
 
@@ -13,11 +14,14 @@ export class MoviesComponent implements OnInit {
   movies: Movie[];
   selectedMovie? : Movie;
 
-  constructor(private moviesService: MoviesService) { }
+  constructor(private moviesService: MoviesService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.moviesService.fetchMoviesFromApi()
-      .subscribe(movies => this.movies = movies);
+      .subscribe(movies => { 
+        this.movies = movies;
+      });
   }
 
   ngDoCheck() {
@@ -25,6 +29,11 @@ export class MoviesComponent implements OnInit {
       this.movies.push(this.moviesService.createdMovie);
       this.moviesService.createdMovie = null;
     }
+  }
+
+  getImageContent(movie: Movie) {
+    // return this.sanitizer.bypassSecurityTrustUrl(movie.image);
+    return this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64, ' + movie.image);
   }
 
   updateMovie(movie: Movie) : void {

@@ -29,7 +29,7 @@
           </ngb-rating>
         
         </div>
-        <img data-test="movie-image" class="mb-1" alt="image">
+        <img [src]="getImageContent(movie)" data-test="movie-image" class="mb-1 movie-image" alt="Image not found.">
         <br>
         <small data-test="movie-comment" class="text-white" *ngIf="selectedMovie != movie">{{movie.comment}}</small>
         <input class="form-control w-50" *ngIf="selectedMovie === movie" [(ngModel)]="movie.comment" value="{{movie.comment}}">

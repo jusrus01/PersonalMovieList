@@ -11,3 +11,8 @@
   .filled.bad {
     color: #C8C8C8;
   }
+
+.movie-image {
+  max-width: 200px;
+  max-height: 200px;
+}

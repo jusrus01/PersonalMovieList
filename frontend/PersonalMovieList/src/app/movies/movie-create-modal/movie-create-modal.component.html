@@ -22,9 +22,9 @@
           </div>
           
           <div data-test="create-image" class="form-group">
-            <label for="image">Image</label>
-            <input formControlName="image" class="form-control" type="text">
-            <input type="file" class="file-upload" onchange="console.log(event.target.files)">
+            <label for="image">Select image</label>
+            <br>
+            <input type="file" accept="image/*" class="file-upload" (change)="onImageSelected($event)" #fileUpload>
           </div>
 
           <div  data-test="create-rating">
