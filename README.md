@@ -22,20 +22,13 @@ The purpose of this project is to learn how to build and use RESTful api with a 
     * Microsoft SQL Server.
 
 # Preview
-## Home page
-GIF
-## Adding movies
+## Adding & removing movies
 GIF
 ## Editing movies
-GIF
-## Removing movie
-GIF
+![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1TQiqNg5kTDMb83HwxYyT6jJff_3BCHyZ)
 ## Sorting movies
-![gif](https://drive.google.com/uc?export=view&id=1_M0z0GAbumyqhTjhT_8FUrUbfShAMH9Y)
-## Login page
-GIF
-## Register page
-GIF
-
+![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1_M0z0GAbumyqhTjhT_8FUrUbfShAMH9Y)
+## Login & register page
+![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1LVQMcI93L9-IENWB3r7mZPEdwN5WBQWE)
 # Thanks
 Thank you for taking the time out of your day to look at this README. Have a nice day!
