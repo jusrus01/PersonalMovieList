@@ -24,7 +24,6 @@ The purpose of this project is to learn how to build and use RESTful api with a 
 # Preview
 ## Adding & removing movies
 ![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1mmnWxnuayVEvg5bVoRCLah7ocq1wx-FM)
-GIF
 ## Editing movies
 ![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1TQiqNg5kTDMb83HwxYyT6jJff_3BCHyZ)
 ## Sorting movies
