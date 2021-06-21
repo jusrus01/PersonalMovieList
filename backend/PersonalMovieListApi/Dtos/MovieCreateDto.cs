@@ -5,10 +5,8 @@ namespace PersonalMovieListApi.Dtos
     public class MovieCreateDto
     {
         [Required]
-        [MaxLength(250)]
         public string Title { get; set; }
 
-        [MaxLength(1000)]
         public string Comment { get; set; }
 
         [Required]

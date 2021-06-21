@@ -12,7 +12,7 @@ namespace PersonalMovieListApi.Models
         public string Comment { get; set; }
 
         [Required]
-        [MaxLength(5)]
+        [Range(0, 5)]
         public int Rating { get; set; }
 
         [Required]
