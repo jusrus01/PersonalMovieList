@@ -23,12 +23,12 @@ The purpose of this project is to learn how to build and use RESTful api with a 
 
 # Preview
 ## Adding & removing movies
-![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1mmnWxnuayVEvg5bVoRCLah7ocq1wx-FM)
+![Should be a gif from assets folder](assets/addremove.gif)
 ## Editing movies
-![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1TQiqNg5kTDMb83HwxYyT6jJff_3BCHyZ)
+![Should be a gif from assets folder](assets/edit.gif)
 ## Sorting movies
-![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1_M0z0GAbumyqhTjhT_8FUrUbfShAMH9Y)
+![Should be a gif from assets folder](assets/sort.gif)
 ## Login & register page
-![Should be a gif from google drive](https://drive.google.com/uc?export=view&id=1LVQMcI93L9-IENWB3r7mZPEdwN5WBQWE)
+![Should be a gif from assets folder](assets/loginregister.gif)
 # Thanks
 Thank you for taking the time out of your day to look at this README. Have a nice day!
