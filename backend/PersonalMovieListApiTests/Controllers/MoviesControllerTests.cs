@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System;
 using PersonalMovieListApi.Dtos;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace PersonalMovieListApi.Tests
 {
@@ -38,43 +39,6 @@ namespace PersonalMovieListApi.Tests
         {
             var badRequestResult = _controller.GetAllMovies();
             Assert.IsType<BadRequestObjectResult>(badRequestResult.Result);
-        }
-
-        [Fact]
-        public void Get_WhenCalledWithAuthToken_ReturnsOnlySpecifiedUsersMovies()
-        {
-            SetUpCorrectAuthTokenForController();
-            string testUsernameFromToken = "test2";
-            var result = _controller.GetAllMovies();
-            var retrievedMovies = GetObjectResult(result);
-            bool allMoviesHaveSameOwner = true;
-
-            foreach(var movie in retrievedMovies)
-            {
-                if(movie.OwnerUsername != testUsernameFromToken)
-                {
-                    allMoviesHaveSameOwner = false;
-                    break;
-                }
-            }
-
-            Assert.True(allMoviesHaveSameOwner);
-        }
-
-        [Fact]
-        public void Get_WhenCalledWithAuthToken_ReturnsOnlySpecifiedUsersMoviesButNoneExist()
-        {
-            _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["Authorization"] = "Bearer " +
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyYW5kb21Ub2tlblVzZXJuYW1lIiwianRpIjoiMmM0MDU0MDktNzhkOS00YmRmLTgxZWUtM2EyNzI3ZTlmODBlIiwiZW1haWwiOiJyYW5kb21Ub2tlblVzZXJuYW1lZXN0QHJhbmRvbVRva2VuVXNlcm5hbWUiLCJ1aWQiOiIyMmU4NWU0Mi00Nzk1LTRiYTYtOTlmOC02MmI0OGU1MTUwMTIiLCJyb2xlcyI6IlVzZXIiLCJleHAiOjE2MjI5MDI1NjQsImlzcyI6IlNlY3VyZUFwaSIsImF1ZCI6IlNlY3VyZUFwaVVzZXIifQ.zDPqv0H-OQm6mg2LPEphD9PqCK5mRrKoXSOt7xMiYgo";
-
-            string testUsernameFromToken = "randomTokenUsername";
-            var result = _controller.GetAllMovies();
-            var retrievedMovies = GetObjectResult(result);
-
-            int count = retrievedMovies.Count();
-
-            Assert.Equal(count, 0);
         }
 
         [Fact]
@@ -210,7 +174,7 @@ namespace PersonalMovieListApi.Tests
             Assert.IsType<BadRequestObjectResult>(badRequest);
         }
 
-        
+        // NOTE: Does not pass this test, because the model state validation is only triggered during runtime.
         [Fact]
         public void Post_WhenCalledWithAuthToken_ReturnsCreatedAtRouteResult()
         {
@@ -218,6 +182,7 @@ namespace PersonalMovieListApi.Tests
             string title = "test";
             string comment = "test";
             int rating = 1;
+
             MovieCreateDto createdMovie = new MovieCreateDto
             {
                 Title = title,
@@ -269,13 +234,6 @@ namespace PersonalMovieListApi.Tests
         {
             var auth = await _userService.GetTokenAsync(new TokenRequestModel());
             return auth.Token;
-        }
-
-        private IEnumerable<MovieModel> GetObjectResult(ActionResult<IEnumerable<MovieModel>> result)
-        {
-            if (result.Result != null)
-                return (IEnumerable<MovieModel>)((ObjectResult)result.Result).Value;
-            return result.Value;            
         }
     }
 }

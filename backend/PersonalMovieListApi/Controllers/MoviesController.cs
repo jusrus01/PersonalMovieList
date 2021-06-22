@@ -69,7 +69,7 @@ namespace PersonalMovieListApi.Controllers
                 return BadRequest("Bad params");
             }
 
-            MovieModel newMovie = _mapper.Map<MovieModel>(movieCreateDto);
+            MovieModel newMovie = _mapper.Map<MovieCreateDto, MovieModel>(movieCreateDto);
             string username = RetrieveUsernameFromJwtAuthToken();
 
             if(username == null)
@@ -91,8 +91,8 @@ namespace PersonalMovieListApi.Controllers
             {
                 newMovie.Image = null;
             }
-            
-            if(!TryValidateModel(newMovie, nameof(MovieModel)))
+
+            if(!TryValidateModel(newMovie))
             {
                 return BadRequest("Image length greater than 256kb");
             }

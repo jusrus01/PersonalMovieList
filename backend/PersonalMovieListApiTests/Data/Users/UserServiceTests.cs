@@ -137,7 +137,7 @@ namespace PersonalMovieListApiTests.Data.Users
                 Password = defaultPassword
             };
 
-            string msg = await _service.RegisterAsync(model);
+            var stateModel = await _service.RegisterAsync(model);
 
             var foundUsers = _manager.Users.Where(user =>
                 user.UserName == existingUser.UserName &&
@@ -167,7 +167,7 @@ namespace PersonalMovieListApiTests.Data.Users
                 Password = defaultPassword
             };
 
-            string msg = await _service.RegisterAsync(model);
+            var stateModel = await _service.RegisterAsync(model);
 
             var foundUsers = _manager.Users.Where(user =>
                 user.UserName == model.Username &&

@@ -19,8 +19,7 @@ namespace PersonalMovieListApi.Tests
             authenticationModel.Roles = new List<string> { "User" };
             return authenticationModel;
         }
-
-        public Task<string> RegisterAsync(RegisterModel model)
+        Task<RegisterStateModel> IUserService.RegisterAsync(RegisterModel model)
         {
             throw new System.NotImplementedException();
         }

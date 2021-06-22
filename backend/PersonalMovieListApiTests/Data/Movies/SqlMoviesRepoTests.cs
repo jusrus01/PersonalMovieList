@@ -113,7 +113,7 @@ namespace PersonalMovieListApiTests.Data.Movies
                 movie.Rating == rating &&
                 movie.Title == title).SingleOrDefault();
 
-            Assert.Equal(null, movieShouldBeNull);
+            Assert.Null(movieShouldBeNull);
         }
 
         [Fact]
@@ -186,7 +186,7 @@ namespace PersonalMovieListApiTests.Data.Movies
         {
             var foundMovie = _repo.GetMovieById(-10);
 
-            Assert.Equal(null, foundMovie);
+            Assert.Null(foundMovie);
         }
 
         [Fact]

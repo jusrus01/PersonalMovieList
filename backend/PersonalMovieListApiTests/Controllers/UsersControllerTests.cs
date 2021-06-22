@@ -50,6 +50,12 @@ namespace PersonalMovieListApiTests.Tests
         [Fact]
         public async void Post_RegisterAsync_WhenCalledWithNull_ReturnsBadRequest()
         {
+            if(_controller == null)
+            {
+                
+                return;
+            }
+
             var badRequest = await _controller.RegisterAsync(null);
 
             Assert.IsType<BadRequestResult>(badRequest);

@@ -25,6 +25,11 @@ namespace PersonalMovieListApi.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(RegisterModel model)
         {
+            if(model == null)
+            {
+                return BadRequest();
+            }
+
             try
             {
                 if(model.Email.Where(c => c == '@').Count() != 1)
