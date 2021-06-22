@@ -36,7 +36,7 @@ namespace PersonalMovieListApi.Controllers
                 return BadRequest("No authorization header found");
             }
 
-            return Ok(_repo.GetAllMoviesByUserName(username));
+            return Ok(_mapper.Map<IEnumerable<MovieModel>, IEnumerable<MovieReadDto>>(_repo.GetAllMoviesByUserName(username)));
         }
 
         //GET api/movies/{id}
@@ -91,7 +91,7 @@ namespace PersonalMovieListApi.Controllers
             {
                 newMovie.Image = null;
             }
-
+            
             if(!TryValidateModel(newMovie, nameof(MovieModel)))
             {
                 return BadRequest("Image length greater than 256kb");

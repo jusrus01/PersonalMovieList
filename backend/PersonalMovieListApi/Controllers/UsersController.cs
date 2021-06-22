@@ -50,6 +50,11 @@ namespace PersonalMovieListApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> GetTokenAsync(TokenRequestModel model)
         {
+            if(model == null)
+            {
+                return BadRequest();
+            }
+
             try
             {
                 var result = await _userService.GetTokenAsync(model);

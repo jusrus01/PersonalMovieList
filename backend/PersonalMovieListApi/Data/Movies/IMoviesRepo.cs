@@ -7,7 +7,7 @@ namespace PersonalMovieListApi.Data
     public interface IMoviesRepo
     {
         bool SaveChanges();
-        IEnumerable<MovieReadDto> GetAllMoviesByUserName(string username);
+        IEnumerable<MovieModel> GetAllMoviesByUserName(string username);
         MovieModel GetMovieById(int id);
         void CreateMovie(MovieModel movie);
         void DeleteMovie(MovieModel movie);

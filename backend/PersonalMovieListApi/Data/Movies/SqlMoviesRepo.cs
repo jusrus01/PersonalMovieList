@@ -34,17 +34,9 @@ namespace PersonalMovieListApi.Data
             _context.Movies.Remove(movie);
         }
 
-        public IEnumerable<MovieReadDto> GetAllMoviesByUserName(string username)
+        public IEnumerable<MovieModel> GetAllMoviesByUserName(string username)
         {
             return _context.Movies.Where(movie => movie.OwnerUsername == username)
-                .Select(movie => new MovieReadDto
-                    {
-                        Id = movie.Id,
-                        Title = movie.Title,
-                        Rating = movie.Rating,
-                        Comment = movie.Comment,
-                        Image = movie.Image
-                    })
                 .ToList();
         }
 
